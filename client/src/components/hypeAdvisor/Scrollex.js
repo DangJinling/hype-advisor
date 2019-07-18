@@ -8,12 +8,6 @@ import './noscript.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addMember } from '../../actions/members';
-import axios from 'axios';
-
-axios.defaults.withCredentials = true;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-const server = 'http://127.0.0.1:8000';
-
 
 
 export class Scrollex extends Component {
@@ -23,19 +17,19 @@ export class Scrollex extends Component {
             name: '',
             email: ''
         }
-        this.onSubmit = this.onSubmit.bind(this);
+        // this.onSubmit = this.onSubmit.bind(this);
     }
 
     // static propTypes = {
     //     addMember: PropTypes.func.isRequired,
     // }
 
-    async onSubmit(e) {
+    onSubmit = (e) => {
         e.preventDefault();
         const { name, email } = this.state;
         const member = { name, email };
-        // this.props.addMember(member);
-        let res = axios.post(`${server}/api/members/`, member);
+        const res = addMember(member);
+        // let res = axios.post(`${server}/api/members/`, member);
         console.log(res);
     }
 
