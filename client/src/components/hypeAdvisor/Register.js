@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { login, register } from '../../actions/auth';
+import { register } from '../../actions/auth';
 import { Redirect } from 'react-router-dom';
+// import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap-theme.css';
 
 export class Register extends Component {
     state = {
@@ -44,11 +46,11 @@ export class Register extends Component {
         if (registerSuccess) {
             return <Redirect to='/login' />;
         }
-        const { username, first_name, last_name, email, password, password2 } = this.state;
+        const { first_name, last_name, email, password, password2 } = this.state;
         return (
-            <div className='col-md-6 m-auto'>
+            <div style={{ width: '50%', margin: '0 auto' }}>
                 <div className='card card-body mt-5'>
-                    <h2 className='text-center'>Regiser</h2>
+                    <h2 className='text-center' style={{ textAlign: 'center' }}>Regiser</h2>
                     <form onSubmit={this.onSubmit}>
                         {/* <div className='form-group'>
                             <label>Username</label>
@@ -60,11 +62,11 @@ export class Register extends Component {
                                 value={username}
                             />
                         </div> */}
-                        <div className='form-group'>
+                        <div className='col-6 col-12-xsmall'>
                             <label>Email</label>
                             <input
                                 type='email'
-                                className='form-control'
+                                // className='form-control'
                                 name='email'
                                 onChange={this.onChange}
                                 value={email}
@@ -110,7 +112,7 @@ export class Register extends Component {
                                 value={password2}
                             />
                         </div>
-                        <div className='form-group'>
+                        <div className='form-group' style={{ marginTop: 10 }}>
                             <button type='submit' className="button primary">
                                 Register
                             </button>

@@ -78,6 +78,10 @@ input, select, textarea {
 		box-sizing: inherit;
 	}
 
+	/* #page-wrapper {
+		background: #161414;
+	} */
+
 	html, body {
 		background: #161414;
 	}
