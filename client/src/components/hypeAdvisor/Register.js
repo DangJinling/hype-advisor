@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom';
 
 export class Register extends Component {
     state = {
-        username: '',
         first_name: '',
         last_name: '',
         email: '',
@@ -16,12 +15,11 @@ export class Register extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        const { username, first_name, last_name, email, password, password2 } = this.state;
+        const { first_name, last_name, email, password, password2 } = this.state;
         if (password !== password2) {
             this.props.createMessage({ passwordNotMatch: 'Password do not match.' })
         } else {
             const newUser = {
-                username,
                 first_name,
                 last_name,
                 password,
@@ -52,7 +50,7 @@ export class Register extends Component {
                 <div className='card card-body mt-5'>
                     <h2 className='text-center'>Regiser</h2>
                     <form onSubmit={this.onSubmit}>
-                        <div className='form-group'>
+                        {/* <div className='form-group'>
                             <label>Username</label>
                             <input
                                 type='text'
@@ -60,6 +58,16 @@ export class Register extends Component {
                                 name='username'
                                 onChange={this.onChange}
                                 value={username}
+                            />
+                        </div> */}
+                        <div className='form-group'>
+                            <label>Email</label>
+                            <input
+                                type='email'
+                                className='form-control'
+                                name='email'
+                                onChange={this.onChange}
+                                value={email}
                             />
                         </div>
                         <div className='form-group'>
@@ -80,16 +88,6 @@ export class Register extends Component {
                                 name='last_name'
                                 onChange={this.onChange}
                                 value={last_name}
-                            />
-                        </div>
-                        <div className='form-group'>
-                            <label>Email</label>
-                            <input
-                                type='email'
-                                className='form-control'
-                                name='email'
-                                onChange={this.onChange}
-                                value={email}
                             />
                         </div>
                         <div className='form-group'>
