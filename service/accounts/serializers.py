@@ -20,7 +20,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
-        user = User.objects.create_user(username=(validated_data['first_name'] + ' ' + validated_data['last_name']), email=validated_data['email'], password=validated_data['password'])
+        # user = User.objects.create_user(username=(validated_data['first_name'] + ' ' + validated_data['last_name']), email=validated_data['email'], password=validated_data['password'])
+        user = User.objects.create_user(username=validated_data['username'], email=validated_data['email'], password=validated_data['password'])
         return user
 
 
@@ -28,8 +29,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
-    first_name = serializers.CharField()
-    last_name = serializers.CharField()
+    # first_name = serializers.CharField()
+    # last_name = serializers.CharField()
+    username = serializers.CharField()
     password = serializers.CharField()
 
     def validate(self, data):

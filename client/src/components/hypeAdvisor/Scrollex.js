@@ -8,6 +8,7 @@ import './noscript.css';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addMember } from '../../actions/members';
+import { Link } from 'react-router-dom';
 
 
 export class Scrollex extends Component {
@@ -17,19 +18,13 @@ export class Scrollex extends Component {
             name: '',
             email: ''
         }
-        // this.onSubmit = this.onSubmit.bind(this);
     }
-
-    // static propTypes = {
-    //     addMember: PropTypes.func.isRequired,
-    // }
 
     onSubmit = (e) => {
         e.preventDefault();
         const { name, email } = this.state;
         const member = { name, email };
         const res = addMember(member);
-        // let res = axios.post(`${server}/api/members/`, member);
         console.log(res);
     }
 
@@ -61,8 +56,8 @@ export class Scrollex extends Component {
                                 </ul>
                             </li>
                             <li><a href="#form" className="scrolly">Contact</a></li>
-                            <li><a href="comingsoon.html">Log In</a></li>
-                            <li><a href="comingsoon.html" className="button primary">Sign Up</a></li>
+                            <li><Link to='/login'>Log In</Link></li>
+                            <li><Link to='/register' className="button primary">Sign Up</Link></li>
 
                         </ul>
                     </nav>
