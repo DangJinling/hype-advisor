@@ -7,7 +7,7 @@ import './main.css';
 import $ from 'jquery';
 import './js/jquery.scrolly.min.js';
 import './js/jquery.dropotron.min.js';
-import 'jquery.scrollex';
+import './js/jquery.scrollex.min.js';
 import browser from './js/browser.min.js';
 import breakpoints from './js/breakpoints.min.js';
 import './js/util.js';
