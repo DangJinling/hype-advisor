@@ -48,7 +48,7 @@ import $ from 'jquery';
 	$.fn.panel = function (userConfig) {
 
 		// No elements?
-		if (this.length == 0)
+		if (this.length === 0)
 			return $this;
 
 		// Multiple elements?
@@ -159,7 +159,7 @@ import $ from 'jquery';
 						href = $a.attr('href'),
 						target = $a.attr('target');
 
-					if (!href || href == '#' || href == '' || href == '#' + id)
+					if (!href || href === '#' || href === '' || href === '#' + id)
 						return;
 
 					// Cancel original event.
@@ -172,7 +172,7 @@ import $ from 'jquery';
 					// Redirect to href.
 					window.setTimeout(function () {
 
-						if (target == '_blank')
+						if (target === '_blank')
 							window.open(href);
 						else
 							window.location.href = href;
@@ -293,7 +293,7 @@ import $ from 'jquery';
 		if (config.hideOnEscape)
 			$window.on('keydown', function (event) {
 
-				if (event.keyCode == 27)
+				if (event.keyCode === 27)
 					$this._hide(event);
 
 			});
@@ -313,7 +313,7 @@ import $ from 'jquery';
 			return $(this);
 
 		// No elements?
-		if (this.length == 0)
+		if (this.length === 0)
 			return $this;
 
 		// Multiple elements?
@@ -335,8 +335,8 @@ import $ from 'jquery';
 
 				var i = $(this);
 
-				if (i.val() == ''
-					|| i.val() == i.attr('placeholder'))
+				if (i.val() === ''
+					|| i.val() === i.attr('placeholder'))
 					i
 						.addClass('polyfill-placeholder')
 						.val(i.attr('placeholder'));
@@ -349,7 +349,7 @@ import $ from 'jquery';
 				if (i.attr('name').match(/-polyfill-field$/))
 					return;
 
-				if (i.val() == '')
+				if (i.val() === '')
 					i
 						.addClass('polyfill-placeholder')
 						.val(i.attr('placeholder'));
@@ -362,7 +362,7 @@ import $ from 'jquery';
 				if (i.attr('name').match(/-polyfill-field$/))
 					return;
 
-				if (i.val() == i.attr('placeholder'))
+				if (i.val() === i.attr('placeholder'))
 					i
 						.removeClass('polyfill-placeholder')
 						.val('');
@@ -392,7 +392,7 @@ import $ from 'jquery';
 				x.addClass('polyfill-placeholder')
 					.val(x.attr('placeholder')).insertAfter(i);
 
-				if (i.val() == '')
+				if (i.val() === '')
 					i.hide();
 				else
 					x.hide();
@@ -404,7 +404,7 @@ import $ from 'jquery';
 
 						var x = i.parent().find('input[name=' + i.attr('name') + '-polyfill-field]');
 
-						if (i.val() == '') {
+						if (i.val() === '') {
 
 							i.hide();
 							x.show();
@@ -448,7 +448,7 @@ import $ from 'jquery';
 						if (i.attr('name').match(/-polyfill-field$/))
 							i.attr('name', '');
 
-						if (i.val() == i.attr('placeholder')) {
+						if (i.val() === i.attr('placeholder')) {
 
 							i.removeClass('polyfill-placeholder');
 							i.val('');
@@ -484,7 +484,7 @@ import $ from 'jquery';
 
 								x = i.parent().find('input[name=' + i.attr('name') + '-polyfill-field]');
 
-								if (i.val() == '') {
+								if (i.val() === '') {
 									i.hide();
 									x.show();
 								}
@@ -504,7 +504,7 @@ import $ from 'jquery';
 							case 'textarea':
 								i.val(i.attr('defaultValue'));
 
-								if (i.val() == '') {
+								if (i.val() === '') {
 									i.addClass('polyfill-placeholder');
 									i.val(i.attr('placeholder'));
 								}
@@ -544,7 +544,7 @@ import $ from 'jquery';
 				$parent = $e.parent();
 
 			// No parent? Bail.
-			if ($parent.length == 0)
+			if ($parent.length === 0)
 				return;
 
 			// Not moved? Move it.
@@ -558,7 +558,7 @@ import $ from 'jquery';
 				$p = $e.prev();
 
 				// Couldn't find anything? Means this element's already at the top, so bail.
-				if ($p.length == 0)
+				if ($p.length === 0)
 					return;
 
 				// Move element to top of parent.

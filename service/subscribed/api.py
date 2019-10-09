@@ -1,9 +1,9 @@
 from rest_framework import viewsets, permissions
 from .serializers import MemberSerializer
-from .models import Member
+from .models import User
 
 class MemberViewSet(viewsets.ModelViewSet):
-    queryset = Member.objects.all()
+    queryset = User.objects.all()
     permission_classes = [
         permissions.AllowAny
     ]
