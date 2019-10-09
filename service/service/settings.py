@@ -119,7 +119,7 @@ DATABASES = {
         'NAME': 'hypedb',
         'USER': 'advisor',
         'PASSWORD': 'TheAdvisorTeam',
-        'HOST': '35.230.8.228',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
