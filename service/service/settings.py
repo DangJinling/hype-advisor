@@ -116,8 +116,8 @@ CORS_ALLOW_HEADERS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'MariaDB',
-        'USER': 'root',
+        'NAME': 'hypedb',
+        'USER': 'advisor',
         'PASSWORD': 'TheAdvisorTeam',
         'HOST': 'localhost',
         'PORT': '3306',
