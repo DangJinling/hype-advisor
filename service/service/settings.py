@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # Quick-start development settings - unsuitable for production
@@ -67,7 +67,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # 'DIRS': [],
-        'DIRS': [os.path.join(BASE_DIR, 'frontend')], # 'templates'
+        'DIRS': [os.path.join(BASE_DIR, 'client/build')], # 'templates'
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -169,14 +169,14 @@ USE_TZ = True
 # STATIC_URL = '/var/www/html/hypeAdvisor/'
 STATIC_URL = '/static/'
 # // add the following
-# REACT_APP_DIR = os.path.join(BASE_DIR, 'client')
-# STATICFILES_DIRS = [
-#     os.path.join(REACT_APP_DIR, 'build', 'static'),
-# ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "frontend"),  # 静态文件目录位置
-)
+REACT_APP_DIR = os.path.join(BASE_DIR, 'client')
+STATICFILES_DIRS = [
+    os.path.join(REACT_APP_DIR, 'build', 'static'),
+]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'frontend')
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, "static"),  # 静态文件目录位置
+# )
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_USE_TLS = True
