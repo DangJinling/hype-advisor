@@ -118,7 +118,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hypedb',
-        'USER': 'advisor',
+        'USER': 'root',
         'PASSWORD': 'TheAdvisorTeam',
         'HOST': 'localhost',
         'PORT': '3306',
