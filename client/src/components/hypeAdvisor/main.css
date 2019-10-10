@@ -3341,9 +3341,9 @@ input, select, textarea {
 
 /* Header */
 
-	#page-wrapper {
+	/* #page-wrapper {
 		padding-top: 3.5em;
-	}
+	} */
 
 	#header {
 		background: rgba(0, 0, 0, 0);
@@ -3351,7 +3351,7 @@ input, select, textarea {
 		height: 3.5em;
 		left: 0;
 		line-height: 3.5em;
-		position: fixed;
+		position: absolute;
 		top: 0;
 		width: 100%;
 		z-index: 100;
