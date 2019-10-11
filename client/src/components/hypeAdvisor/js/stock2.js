@@ -1,3 +1,4 @@
+import d3 from '../js/d3.min.js';
 var myData2 = "date,NVS,JNJ,ROG\n20190117,77.81,129.09,257.15\n20190122,77.54,128.80,257.00\n20190127,75.19,128.99,253.85\n20190201,76.96,134.20,263.00\n20190206,78.13,133.00,268.35\n20190211,77.36,132.00,270.15\n20190216,78.91,136.38,272.55\n20190221,79.46,135.42,277.05\n20190226,80.32,136.11,278.90\n20190301,80.24,138.35,276.95\n20190305,78.84,138.77,279.15\n20190310,79.07,138.56,271.20\n20190315,81.90,137.60,271.65\n20190320,82.07,137.29,270.85\n20190325,81.92,136.61,268.75\n20190330,84.40,139.79,274.35\n20190404,82.72,135.57,273.85\n20190409,83.41,135.57,275.00\n20190414,80.96,136.52,269.00\n20190419,76.41,137.52,263.40\n20190424,77.82,139.20,266.95\n20190429,81.13,139.84,266.50\n20190504,82.61,142.01,269.30\n20190509,80.98,138.73,260.00\n20190514,80.73,136.82,258.15\n20190519,82.01,138.42,265.95\n20190524,87.52,138.85,271.20\n20190529,85.81,131.33,264.00\n20190603,87.66,131.44,264.20\n20190608,88.06,138.55,269.40\n20190613,89.59,140.71,276.30\n20190618,91.30,140.23,278.85\n20190623,92.80,143.06,276.25\n20190628,91.31,139.28,274.65\n20190703,92.50,142.14,281.45\n20190708,90.74,140.97,276.65\n20190713,88.19,134.30,262.70\n20190718,94.26,132.07,271.20";
 var default_width2 = 250;
 var default_height2 = 280;
@@ -12,34 +13,33 @@ var margin2 = {
     width2 = default_width2 - margin2.left - margin2.right,
     height2 = default_height2 - margin2.top - margin2.bottom;
 
-function scale() {
-  if (window.innerWidth > 1300) {
-    current_width2 = window.innerWidth * 0.21;
-    current_height2 = window.innerWidth * 0.21;
-  } else if (window.innerWidth > 600) {
-    current_width2 = window.innerWidth * 0.23;
-    current_height2 = window.innerWidth * 0.23;
-  } else {
-    current_width2 = window.innerWidth * 0.45;
-    current_height2 = window.innerWidth * 0.45;
-  }
+export const stock2_scale = () => {
+    let current_width2;
+    let current_height2;
+    if (window.innerWidth > 1300) {
+        current_width2 = window.innerWidth * 0.21;
+        current_height2 = window.innerWidth * 0.21;
+    } else if (window.innerWidth > 600) {
+        current_width2 = window.innerWidth * 0.23;
+        current_height2 = window.innerWidth * 0.23;
+    } else {
+        current_width2 = window.innerWidth * 0.45;
+        current_height2 = window.innerWidth * 0.45;
+    }
 
-  current_ratio2 = current_width2 / current_height2;
+    const current_ratio2 = current_width2 / current_height2;
+    let w, h;
+    if ( current_ratio2 > default_ratio2 ){
+        h = current_height2;
+        w = h * default_ratio2;
+    } else {
+        w = current_width2;
+        h = w / default_ratio2;
+    }
 
-  if ( current_ratio2 > default_ratio2 ){
-    h = current_height2;
-    w = h * default_ratio2;
-  } else {
-    w = current_width2;
-    h = w / default_ratio2;
-  }
-
-  width2 = w - margin2.left - margin2.right;
-  height2 = h - margin2.top - margin2.bottom;
-
-};
-
-scale();
+    width2 = w - margin2.left - margin2.right;
+    height2 = h - margin2.top - margin2.bottom;
+///
 
 var parseDate = d3.time.format("%Y%m%d").parse;
 
@@ -190,7 +190,7 @@ city2.append("text")
     }).attr('fill', 'white')
     .attr("transform", function(d) {
         console.log(d.value.date)
-        return "translate(" + x(d.value.date) + "," + y(d.value.price) + ")";
+        return "translate(" + x2(d.value.date) + "," + y2(d.value.price) + ")";
     })
     .attr("x", 3)
     .attr("dy", ".35em").attr('fill', 'white')
@@ -261,12 +261,13 @@ mouseG2.append('svg:rect') // append a rect to catch mouse movements on canvas
 
         d3.selectAll(".mouse-per-line2")
             .attr("transform", function(d, i) {
-                console.log(width2 / mouse[0])
+                console.log(width2 / mouse[0]);
+                let pos;
                 var xDate = x2.invert(mouse[0]),
                     bisect = d3.bisector(function(d) {
                         return d.date;
                     }).right;
-                idx = bisect(d.values, xDate);
+                const idx = bisect(d.values, xDate);
 
                 var beginning = 0,
                     end = line2s[i].getTotalLength(),
@@ -290,3 +291,6 @@ mouseG2.append('svg:rect') // append a rect to catch mouse movements on canvas
                 return "translate(" + mouse[0] + "," + pos.y + ")";
             });
     });
+};
+
+// scale();

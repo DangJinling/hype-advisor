@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import { Modal } from 'antd';
+import { Link, Redirect } from 'react-router-dom';
 import PDF from 'react-pdf-js';
 import { register } from '../../actions/auth';
 import pdfFile from '../../asset/Terms and Conditions.pdf';
 import './Agreement.css';
+import letter_logo from './images/letter_logo.png';
 
 export class Agreement extends Component {
     state = {

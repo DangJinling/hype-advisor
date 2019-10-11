@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { login } from '../../actions/auth';
 import { Welcome } from './Welcome';
+import letter_logo from './images/letter_logo.png';
 // import 'bootstrap/dist/css/bootstrap.css';
 // import 'bootstrap/dist/css/bootstrap-theme.css';
 
@@ -35,42 +36,65 @@ export class Login extends Component {
     renderLoginPage = () => {
         const { username, password } = this.state;
         return (
-            < div className='col-md-6 m-auto' style={{ width: '50%', margin: '0 auto' }
-            }>
-                <div className='card card-body mt-5'>
-                    <h2 className='text-center' style={{ textAlign: 'center' }}>Login</h2>
-                    <form onSubmit={this.onSubmit}>
-                        <div className='form-group'>
-                            <label>Email</label>
-                            <input
-                                type='email'
-                                className='form-control'
-                                name='username'
-                                onChange={this.onChange}
-                                value={username}
-                            />
-                        </div>
-                        <div className='form-group'>
-                            <label>Password</label>
-                            <input
-                                type='password'
-                                className='form-control'
-                                name='password'
-                                onChange={this.onChange}
-                                value={password}
-                            />
-                        </div>
-                        <div className='form-group' style={{ marginTop: 10 }}>
-                            <button type='submit' className="button primary">
-                                Login
-                            </button>
-                        </div>
-                        <p>
-                            Don't have an account? <Link to='/register'>Regiser</Link>
-                        </p>
-                    </form>
-                </div>
-            </div >
+            <div id="page-wrapper">
+                {/* <!-- Header --> */}
+                <header id="header">
+                    <h1 id="logo">
+                        <a href="#" >
+                            <img src={letter_logo} alt="" style={{ float: 'right', height: '40px', margin: '10px 0px' }} />
+                        </a>
+                    </h1>
+                    <nav id="nav">
+                        <ul>
+                            <li>
+                                <a href="#">About</a>
+                                <ul>
+                                    <li><a href="#story" className="scrolly">Our Story</a></li>
+                                    <li><a href="#service" className="scrolly">Our Service</a></li>
+                                    <li><a href="#industry" className="scrolly">The Industry</a></li>
+                                    <li><a href="#why" className="scrolly">Why Us</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </header>
+                < div className='col-md-6 m-auto' style={{ width: '50%', margin: '0 auto', paddingTop: 60 }
+                }>
+                    <div className='card card-body mt-5'>
+                        <h2 className='text-center' style={{ textAlign: 'center' }}>Login</h2>
+                        <form onSubmit={this.onSubmit}>
+                            <div className='form-group'>
+                                <label>Email</label>
+                                <input
+                                    type='email'
+                                    className='form-control'
+                                    name='username'
+                                    onChange={this.onChange}
+                                    value={username}
+                                />
+                            </div>
+                            <div className='form-group'>
+                                <label>Password</label>
+                                <input
+                                    type='password'
+                                    className='form-control'
+                                    name='password'
+                                    onChange={this.onChange}
+                                    value={password}
+                                />
+                            </div>
+                            <div className='form-group' style={{ marginTop: 10 }}>
+                                <button type='submit' className="button primary">
+                                    Login
+                                </button>
+                            </div>
+                            <p>
+                                Don't have an account? <Link to='/register'>Regiser</Link>
+                            </p>
+                        </form>
+                    </div>
+                </div >
+            </div>
         )
     }
 
