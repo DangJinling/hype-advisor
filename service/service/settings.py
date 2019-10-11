@@ -13,8 +13,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR1 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -110,24 +111,27 @@ CORS_ALLOW_HEADERS = [
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hypedb',
-        'USER': 'root',
-        'PASSWORD': 'TheAdvisorTeam',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR1, 'db.sqlite3'),
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'hypedb1',
+#         'USER': 'hype-advisor',
+#         'PASSWORD': '123456',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#         'OPTIONS': {
+#             "init_command": "SET foreign_key_checks = 0;",
+#         }
+#     }
+# }
 
-# AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.UserInfo'
 
 
 # Password validation
@@ -178,18 +182,18 @@ STATICFILES_DIRS = [
 #     os.path.join(BASE_DIR, "static"),  # 静态文件目录位置
 # )
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp-mail.outlook.com'
-# EMAIL_PORT = 587
-# DEFAULT_FROM_EMAIL = 'ngo-skt@outlook.com'
-# EMAIL_HOST_USER = 'ngo-skt@outlook.com'
-# EMAIL_HOST_PASSWORD = 'ngo@sktlab'
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'dev.ngorganize@gmail.com'
-EMAIL_HOST_USER = 'dev.ngorganize@gmail.com'
-EMAIL_HOST_PASSWORD = 'NgoDev201('
+DEFAULT_FROM_EMAIL = 'ngo-skt@outlook.com'
+EMAIL_HOST_USER = 'ngo-skt@outlook.com'
+EMAIL_HOST_PASSWORD = 'ngo@sktlab'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# DEFAULT_FROM_EMAIL = 'dev.ngorganize@gmail.com'
+# EMAIL_HOST_USER = 'dev.ngorganize@gmail.com'
+# EMAIL_HOST_PASSWORD = 'NgoDev201('
