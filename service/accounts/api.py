@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, viewsets
 from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
@@ -76,11 +76,24 @@ class LoginAPI(generics.GenericAPIView):
 class UserAPI(generics.RetrieveAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
+        # permissions.AllowAny,
     ]
     serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
+
+
+class GetUsersAPI(viewsets.ModelViewSet):
+    queryset = UserInfo.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = UserSerializer
+
+    # def get_object(self):
+    #     queryset = UserInfo.objects.all()
+    #     return queryset
 
 
 # Active account
