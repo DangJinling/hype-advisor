@@ -1,3 +1,4 @@
+import d3 from '../js/d3.min.js';
 var myData3 = "date,VWAPY,TM,TSLA\n20190117,16.30,124.92,347.31\n20190122,16.17,123.60,298.92\n20190127,17.11,122.48,296.38\n20190201,17.05,122.00,312.21\n20190206,16.94,121.05,317.22\n20190211,15.86,117.15,312.84\n20190216,16.28,121.15,307.88\n20190221,16.52,121.24,291.23\n20190226,17.18,123.23,297.86\n20190301,17.49,120.34,294.79\n20190305,17.40,118.26,276.54\n20190310,16.51,119.13,290.92\n20190315,16.24,118.97,275.43\n20190320,16.51,119.67,273.60\n20190325,15.78,120.49,260.42\n20190330,15.73,118.02,279.86\n20190404,16.78,122.08,267.78\n20190409,16.58,122.06,272.31\n20190414,17.45,121.97,266.38\n20190419,17.37,125.16,273.26\n20190424,17.52,122.88,258.66\n20190429,17.46,123.81,241.47\n20190504,17.96,123.65,255.03\n20190509,17.20,119.32,241.98\n20190514,16.70,119.07,232.31\n20190519,16.13,118.11,205.36\n20190524,15.99,118.55,190.63\n20190529,15.97,119.55,189.86\n20190603,15.64,118.13,178.97\n20190608,16.05,122.39,204.50\n20190613,16.03,124.79,213.91\n20190618,16.01,125.37,224.74\n20190623,16.66,124.79,223.64\n20190628,16.81,123.99,223.46\n20190703,17.32,126.83,234.90\n20190708,17.33,126.87,230.34\n20190713,17.23,127.71,245.08\n20190718,17.05,129.81,253.54";
 var default_width3 = 250;
 var default_height3 = 280;
@@ -12,34 +13,33 @@ var margin3 = {
     width3 = default_width3 - margin3.left - margin3.right,
     height3 = default_height3 - margin3.top - margin3.bottom;
 
-function scale() {
-  if (window.innerWidth > 1300) {
-    current_width3 = window.innerWidth * 0.21;
-    current_height3 = window.innerWidth * 0.21;
-  } else if (window.innerWidth > 600) {
-    current_width3 = window.innerWidth * 0.23;
-    current_height3 = window.innerWidth * 0.23;
-  } else {
-    current_width3 = window.innerWidth * 0.45;
-    current_height3 = window.innerWidth * 0.45;
-  }
+export const stock3_scale = () => {
+    let current_width3;
+    let current_height3;
+    if (window.innerWidth > 1300) {
+        current_width3 = window.innerWidth * 0.21;
+        current_height3 = window.innerWidth * 0.21;
+    } else if (window.innerWidth > 600) {
+        current_width3 = window.innerWidth * 0.23;
+        current_height3 = window.innerWidth * 0.23;
+    } else {
+        current_width3 = window.innerWidth * 0.45;
+        current_height3 = window.innerWidth * 0.45;
+    }
 
-  current_ratio3 = current_width3 / current_height3;
+    const current_ratio3 = current_width3 / current_height3;
+    let w, h;
+    if ( current_ratio3 > default_ratio3 ){
+        h = current_height3;
+        w = h * default_ratio3;
+    } else {
+        w = current_width3;
+        h = w / default_ratio3;
+    }
 
-  if ( current_ratio3 > default_ratio3 ){
-    h = current_height3;
-    w = h * default_ratio3;
-  } else {
-    w = current_width3;
-    h = w / default_ratio3;
-  }
-
-  width3 = w - margin3.left - margin3.right;
-  height3 = h - margin3.top - margin3.bottom;
-
-};
-
-scale();
+    width3 = w - margin3.left - margin3.right;
+    height3 = h - margin3.top - margin3.bottom;
+///
 
 var parseDate = d3.time.format("%Y%m%d").parse;
 
@@ -189,7 +189,8 @@ city3.append("text")
     }).attr('fill', 'white')
     .attr("transform", function(d) {
         console.log(d.value.date)
-        return "translate(" + x(d.value.date) + "," + y(d.value.price) + ")";
+        // return "translate(" + x(d.value.date) + "," + y(d.value.price) + ")";
+           return "translate(x(" + d.value.date + "),y(" + d.value.price + "))";
     })
     .attr("x", 3)
     .attr("dy", ".35em").attr('fill', 'white')
@@ -260,12 +261,13 @@ mouseG3.append('svg:rect') // append a rect to catch mouse movements on canvas
 
         d3.selectAll(".mouse-per-line3")
             .attr("transform", function(d, i) {
-                console.log(width3 / mouse[0])
+                console.log(width3 / mouse[0]);
+                let pos;
                 var xDate = x3.invert(mouse[0]),
                     bisect = d3.bisector(function(d) {
                         return d.date;
                     }).right;
-                idx = bisect(d.values, xDate);
+                const idx = bisect(d.values, xDate);
 
                 var beginning = 0,
                     end = line3s[i].getTotalLength(),
@@ -289,3 +291,6 @@ mouseG3.append('svg:rect') // append a rect to catch mouse movements on canvas
                 return "translate(" + mouse[0] + "," + pos.y + ")";
             });
     });
+};
+
+// scale();

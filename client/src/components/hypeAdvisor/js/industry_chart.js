@@ -1,3 +1,4 @@
+import d3 from '../js/d3.min.js';
 var myData0 = "date,Yeezy v2 Cream (Size 6),Travis Scott Jordan 4 (Size 12),Serena OW AM97 (Size 10)\n20190117,292.00,408.00,900.00\n20190122,294.00,416.00,900.00\n20190127,305.00,429.00,915.00\n20190201,298.00,435.00,890.00\n20190206,294.00,426.00,915.00\n20190206,294.00,426.00,915.00\n20190211,293.00,434.00,915.00\n20190216,299.00,475.00,950.00\n20190221,311.00,462.00,950.00\n20190226,354.00,483.00,950.00\n20190301,364.00,450.00,950.00\n20190305,358.00,473.00,950.00\n20190310,355.00,476.00,910.00\n20190315,358.00,500.00,999.00\n20190320,365.00,487.00,999.00\n20190325,377.00,495.00,999.00\n20190330,383.00,474.00,999.00\n20190404,377.00,488.00,1000.00\n20190409,375.00,515.00,907.00\n20190414,377.00,520.00,1080.00\n20190419,358.00,485.00,1080.00\n20190424,355.00,481.00,1080.00\n20190429,351.00,513.00,1035.00\n20190504,360.00,503.00,1121.00\n20190509,367.00,516.00,1113.00\n20190514,368.00,528.00,1141.00\n20190519,367.00,544.00,1063.00\n20190524,375.00,504.00,1095.00\n20190529,391.00,520.00,1134.00\n20190603,376.00,529.00,1134.00\n20190608,393.00,541.00,1134.00\n20190613,394.00,526.00,1150.00\n20190618,395.00,505.00,1150.00\n20190623,388.00,540.00,1150.00\n20190628,400.00,547.00,1150.00\n20190703,415.00,559.00,1200.00\n20190708,419.00,537.00,1200.00\n20190713,408.00,549.00,1200.0\n20190718,418.00,553.00,1200.00";
 var default_width0 = 600;
 var default_height0 = 620;
@@ -9,38 +10,37 @@ var margin0 = {
         bottom: 70,
         left: 30
     },
-    width0 = default_width0 - margin0.left - margin0.right,
-    height0 = default_height0 - margin0.top - margin0.bottom;
+width0 = default_width0 - margin0.left - margin0.right,
+height0 = default_height0 - margin0.top - margin0.bottom;
 
-function scale() {
-  if (window.innerWidth > 1300) {
-    current_width0 = window.innerWidth * 0.42;
-    current_height0 = window.innerWidth * 0.42;
-  } else if (window.innerWidth > 600) {
-    current_width0 = window.innerWidth * 0.46;
-    current_height0 = window.innerWidth * 0.46;
-  } else {
-    current_width0 = window.innerWidth * 0.9;
-    current_height0 = window.innerWidth * 0.9;
-  }
+export const industry_chart_scale = () => {
+    let current_width0;
+    let current_height0;
+    if (window.innerWidth > 1300) {
+        current_width0 = window.innerWidth * 0.42;
+        current_height0 = window.innerWidth * 0.42;
+    } else if (window.innerWidth > 600) {
+        current_width0 = window.innerWidth * 0.46;
+        current_height0 = window.innerWidth * 0.46;
+    } else {
+        current_width0 = window.innerWidth * 0.9;
+        current_height0 = window.innerWidth * 0.9;
+    }
 
-  current_ratio0 = current_width0 / current_height0;
+    const current_ratio0 = current_width0 / current_height0;
+    let w, h;
+    if ( current_ratio0 > default_ratio0 ){
+        h = current_height0;
+        w = h * default_ratio0;
+    } else {
+        w = current_width0;
+        h = w / default_ratio0;
+    }
 
-  if ( current_ratio0 > default_ratio0 ){
-    h = current_height0;
-    w = h * default_ratio0;
-  } else {
-    w = current_width0;
-    h = w / default_ratio0;
-  }
-
-  width0 = w - margin0.left - margin0.right;
-  height0 = h - margin0.top - margin0.bottom;
-
-};
-
-scale();
-
+    width0 = w - margin0.left - margin0.right;
+    height0 = h - margin0.top - margin0.bottom;
+/////
+   
 var parseDate = d3.time.format("%Y%m%d").parse;
 
 var x0 = d3.time.scale()
@@ -189,7 +189,7 @@ city0.append("text")
     }).attr('fill', 'white')
     .attr("transform", function(d) {
         console.log(d.value.date)
-        return "translate(" + x(d.value.date) + "," + y(d.value.price) + ")";
+        return "translate(x(" + d.value.date + "),y(" + d.value.price + "))";
     })
     .attr("x", 3)
     .attr("dy", ".35em").attr('fill', 'white')
@@ -260,12 +260,13 @@ mouseG0.append('svg:rect') // append a rect to catch mouse movements on canvas
 
         d3.selectAll(".mouse-per-line0")
             .attr("transform", function(d, i) {
+                let pos;
                 console.log(width0 / mouse[0])
                 var xDate = x0.invert(mouse[0]),
                     bisect = d3.bisector(function(d) {
                         return d.date;
                     }).right;
-                idx = bisect(d.values, xDate);
+                const idx = bisect(d.values, xDate);
 
                 var beginning = 0,
                     end = line0s[i].getTotalLength(),
@@ -273,7 +274,8 @@ mouseG0.append('svg:rect') // append a rect to catch mouse movements on canvas
 
                 while (true) {
                     target = Math.floor((beginning + end) / 2);
-                    pos = line0s[i].getPointAtLength(target);
+                   
+                    pos= line0s[i].getPointAtLength(target);
                     if ((target === end || target === beginning) && pos.x !== mouse[0]) {
                         break;
                     }
@@ -289,3 +291,6 @@ mouseG0.append('svg:rect') // append a rect to catch mouse movements on canvas
                 return "translate(" + mouse[0] + "," + pos.y + ")";
             });
     });
+};
+
+// scale();
