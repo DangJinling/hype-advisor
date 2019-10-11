@@ -1,0 +1,28 @@
+label {
+    color: #ffffff;
+    display: inline;
+    font-size: 0.9em;
+    font-weight: 300;
+    margin: 0 2em 1em 0;
+}
+
+li {
+    display: inline;
+}
+
+a {
+    transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    border-bottom: 0;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #e85151 !important;
+    border-bottom-color: transparent;
+}
+
+.PaginationFooter {
+    text-align: right;
+    margin-top: 10px;
+}
