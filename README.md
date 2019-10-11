@@ -6,6 +6,7 @@ hype-advisor/client对应 前台代码， /service 对应后台代码
 pip3 install django-cors-headers
 pip3 install djangorestframework
 pip3 install django-rest-knox
+pip3 install pymysql
 
 2. 生出数据库表
 python3 manage.py makemigrations

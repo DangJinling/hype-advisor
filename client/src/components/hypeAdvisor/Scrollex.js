@@ -10,7 +10,9 @@ import './js/jquery.dropotron.min.js';
 import './js/jquery.scrollex.min.js';
 import browser from './js/browser.min.js';
 import breakpoints from './js/breakpoints.min.js';
+import d3 from './js/d3.min.js';
 import './js/util.js';
+import './js/buttons.js';
 // import './js/chart.js';
 // import './js/main.js';
 import './font-awesome.min.css';
@@ -18,6 +20,7 @@ import './noscript.css';
 // import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 import { addMember } from '../../actions/members';
+import { trackRecord, marketComparison } from './js/buttons.js';
 import { Link } from 'react-router-dom';
 
 
@@ -32,7 +35,11 @@ export class Scrollex extends Component {
     }
 
     componentDidMount() {
+        this.loadPage();
+        this.loadChart();
+    }
 
+    loadPage = () => {
 
         var $window = $(window),
             $body = $('body');
@@ -277,6 +284,259 @@ export class Scrollex extends Component {
 
     }
 
+    loadChart = () => {
+        var myData = "date,1x AAPL Stock,2x AAPL Stock,1x OW AF1 (Volt)\n20181219,160.89,321.78,388.00\n20181224,146.83,293.66,353.00\n20181226,157.17,314.34,369.00\n20190102,157.92,315.84,379.00\n20190103,142.19,284.38,382.00\n20190104,148.26,296.52,380.00\n20190129,154.68,309.36,410.00\n20190205,174.18,348.36,431.00\n20190308,172.91,345.82,515.00\n20190321,195.09,390.18,595.00\n20190326,186.79,393.58,613.00\n20190411,198.95,397.90,698.00\n20190416,199.25,399.50,688.00\n20190421,204.53,409.06,730.00\n20190423,207.48,414.96,684.00\n20190430,204.61,409.22,685.00\n20190501,200.67,401.34,700.00\n20190502,209.15,418.30,705.00\n20190503,211.75,423.50,700.00";
+        var default_width = 600;
+        var default_height = 260;
+        var default_ratio = default_width / default_height;
+
+        var margin = {
+            top: 60,
+            right: 80,
+            bottom: 30,
+            left: 30
+        },
+            width = default_width - margin.left - margin.right,
+            height = default_height - margin.top - margin.bottom;
+
+        function scale() {
+            var current_width = Math.min(600, window.innerWidth * 0.9);
+            var current_height = 260;
+
+            var current_ratio = current_width / current_height;
+            var h;
+            var w;
+            if (current_ratio > default_ratio) {
+                h = current_height;
+                w = h * default_ratio;
+            } else {
+                w = current_width;
+                h = w / default_ratio;
+            }
+
+            width = w - margin.left - margin.right;
+            height = h - margin.top - margin.bottom;
+
+        };
+
+        scale();
+
+        var parseDate = d3.time.format("%Y%m%d").parse;
+
+        var x = d3.time.scale()
+            .range([0, width]);
+
+        var y = d3.scale.linear()
+            .range([height, 0]);
+
+        var color = d3.scale.ordinal().range(['#ffffff', '#ffffff', '#d13b3c']);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left");
+
+        var line = d3.svg.line()
+            .interpolate("basis")
+            .x(function (d) {
+                return x(d.date);
+            })
+            .y(function (d) {
+                return y(d.price);
+            });
+
+        var svg = d3.select("#chart").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .style("fill", "white")
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var data = d3.csv.parse(myData)
+
+        color.domain(d3.keys(data[0]).filter(function (key) {
+
+            return key !== "date";
+        }));
+
+        data.forEach(function (d) {
+            d.date = parseDate(d.date);
+        });
+
+        var cities = color.domain().map(function (name) {
+            return {
+                name: name,
+                values: data.map(function (d) {
+                    return {
+                        date: d.date,
+                        price: +d[name]
+                    };
+                })
+            };
+        });
+
+        x.domain(d3.extent(data, function (d) {
+            return d.date;
+        }));
+
+        y.domain([
+            d3.min(cities, function (c) {
+                return d3.min(c.values, function (v) {
+                    return v.price;
+                });
+            }),
+            d3.max(cities, function (c) {
+                return d3.max(c.values, function (v) {
+                    return v.price;
+                });
+            })
+        ]);
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .style("fill", "white")
+            .call(xAxis);
+
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+
+        svg.append("text")
+            .attr("x", (width / 2))
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("font-size", width / 27)
+            .text("Price (USD) over Time: Apple Stock vs. Off-White Air Force 1 Volt");
+
+        var city = svg.selectAll(".city")
+            .data(cities)
+            .enter().append("g")
+            .attr("class", "city");
+
+        city.append("path")
+            .attr("class", "line")
+            .attr("d", function (d) {
+                return line(d.values);
+            })
+            .style("stroke", function (d) {
+                return color(d.name);
+            });
+
+        city.append("text")
+            .datum(function (d) {
+                return {
+                    name: d.name,
+                    value: d.values[d.values.length - 1]
+                };
+            }).attr('fill', 'white')
+            .attr("transform", function (d) {
+                console.log(d.value.date)
+                return "translate(" + x(d.value.date) + "," + y(d.value.price) + ")";
+            })
+            .attr("x", 3)
+            .attr("dy", ".35em").attr('fill', 'white')
+            .text(function (d) {
+                return d.name;
+            }).attr('fill', 'white');
+
+        var mouseG = svg.append("g")
+            .attr("class", "mouse-over-effects");
+
+        mouseG.append("path") // this is the black vertical line to follow mouse
+            .attr("class", "mouse-line")
+            .style("stroke", "white")
+            .style("stroke-width", "1px")
+            .style("opacity", "0");
+
+        var lines = document.getElementsByClassName('line');
+
+        var mousePerLine = mouseG.selectAll('.mouse-per-line')
+            .data(cities)
+            .enter()
+            .append("g")
+            .attr("class", "mouse-per-line");
+
+        mousePerLine.append("circle")
+            .attr("r", 5)
+            .style("stroke", function (d) {
+                return color(d.name);
+            })
+            .style("fill", "none")
+            .style("stroke-width", "1px")
+            .style("opacity", "0");
+
+        mousePerLine.append("text")
+            .attr("transform", "translate(10,3)")
+            .attr('fill', 'white');
+
+        mouseG.append('svg:rect') // append a rect to catch mouse movements on canvas
+            .attr('width', width) // can't catch mouse events on a g element
+            .attr('height', height)
+            .attr('fill', 'none')
+            .attr('pointer-events', 'all')
+            .on('mouseout', function () { // on mouse out hide line, circles and text
+                d3.select(".mouse-line")
+                    .style("opacity", "0");
+                d3.selectAll(".mouse-per-line circle")
+                    .style("opacity", "0");
+                d3.selectAll(".mouse-per-line text")
+                    .style("opacity", "0");
+
+            })
+            .on('mouseover', function () { // on mouse in show line, circles and text
+                d3.select(".mouse-line")
+                    .style("opacity", "1");
+                d3.selectAll(".mouse-per-line circle")
+                    .style("opacity", "1");
+                d3.selectAll(".mouse-per-line text")
+                    .style("opacity", "1");
+            })
+            .on('mousemove', function () { // mouse moving over canvas
+                var mouse = d3.mouse(this);
+                d3.select(".mouse-line")
+                    .attr("d", function () {
+                        var d = "M" + mouse[0] + "," + height;
+                        d += " " + mouse[0] + "," + 0;
+                        return d;
+                    });
+
+                d3.selectAll(".mouse-per-line")
+                    .attr("transform", function (d, i) {
+                        console.log(width / mouse[0])
+                        var xDate = x.invert(mouse[0]),
+                            bisect = d3.bisector(function (d) {
+                                return d.date;
+                            }).right;
+                        var idx = bisect(d.values, xDate);
+
+                        var beginning = 0,
+                            end = lines[i].getTotalLength(),
+                            target = null;
+                        var pos;
+                        while (true) {
+                            target = Math.floor((beginning + end) / 2);
+                            pos = lines[i].getPointAtLength(target);
+                            if ((target === end || target === beginning) && pos.x !== mouse[0]) {
+                                break;
+                            }
+                            if (pos.x > mouse[0]) end = target;
+                            else if (pos.x < mouse[0]) beginning = target;
+                            else break; //position found
+                        }
+
+                        d3.select(this).select('text')
+                            .text(y.invert(pos.y).toFixed(2));
+
+
+                        return "translate(" + mouse[0] + "," + pos.y + ")";
+                    });
+            });
+    }
+
     onSubmit = (e) => {
         e.preventDefault();
         const { name, email } = this.state;
@@ -380,38 +640,56 @@ export class Scrollex extends Component {
                             <h2>Our Service</h2>
                             <p>A clothing and sneaker-based hedgefund with no barriers to entry.</p>
                         </header>
-                        <p align="left">
-                            We are a <b>niche hedge fund</b> that operates specifically in the streetwear market. Using our experience, connections, and data, we buy items that we predict to be <b>bullish</b>: they increase in resale value over time. If you invest into us, we’ll put your capital into the market, buying and selling streetwear items to make a profit. At the end of the investing time frame, we transfer the money we make directly to your <b>PayPal account</b>, minus a commission fee.
-					</p>
                         <div className="box alt">
                             <div className="row gtr-50 gtr-uniform">
                                 <div className="col-12"><span className="image fit"><img src={service} alt="" /></span></div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                        <p align="left">
+                            We are a <b>niche hedge fund</b> that operates specifically in the streetwear market. Using our experience, connections, and data analysis, we buy items that we predict to be <b>bullish</b>: they increase in resell value over time. If you invest with us, we will put your capital into the market to buy and hold streetwear items. At any given time, you can log into your account<sup>1</sup> and check your portfolio, which displays your investments, their current values, and the reasoning behind the choice of each item. When your six-month investing time frame is completed, we will sell the items and transfer your money directly to your <b>PayPal account</b>.
+                            <br />
+                            <br />
+                            During the launch of our service, we will open up a <b>limited number of slots</b> for clients. Clients can invest starting at a low minimum of $100, with the money pooled together for the investment round and utilized to buy a diverse array of streetwear items. Each client then owns a percentage of each item, which translates to a percentage of the total value. Within each pool, we will also contribute a portion of our funds, <b>embarking along the journey with you</b>.
+                            <br />
+                            <br />
+                            At the end of the investing period, we will pay you your profit after taking a performance fee < sup > 3</sup > similar to traditional hedge funds.We will also return your original investment with a minimal management fee < sup > 3</sup > subtracted(since the acquisition of streetwear items is a tedious process).
+                            <br />
+                            <br />
+                            To stay updated on the launch of our service and sign up for a slot when they release, <b>be sure to <a href="#form" className="scrolly">give us your contact information</a></b>.
+                            <br />
+                        </p >
+                        <div className="asterisk">
+                            <sup>1</sup>User interface and accounts on our website are still under construction. In the meantime, payments and updates will be coordinated through email and PayPal.
+                        <br />
+                            <sup>2</sup>We are not affiliated with StockX, but their website provides a good basis for understanding the value of different items.
+                        <br />
+                            <sup>3</sup>Exact fees follow closely with the 2 and 20 rule for hedgefunds.Exact percentages are announced to those on our email list, and these fees are also subject to change, in which case we will notify all potential customers via email and update on our website and contracts.
+                        </div >
+                    </div >
+                </section >
                 <section id="industry" className="wrapper style1 special fade">
                     <div className="container">
                         <header>
                             <h2>The Industry</h2>
-                            <p>The potential in streetwear investment.</p>
+                            <p>Taking the world by storm, one release at a time.</p>
                         </header>
                         <p align="left">
+                            {/* <!-- <span className="left" id="chart_div"></span> --> */}
                             <span id="chart" className="left"></span>
                             The streetwear industry is a multi-billion industry, with the resell market itself currently valued at <b>$2 billion</b> (per <a href="https://www.businessinsider.com/most-expensive-sneakers-sold-last-year-resale-2019-4" target="_blank">Business Insider)</a>. This number is only growing at an exponential rate: it is projected to hit <b>$6 billion by 2025</b>. <b>Start investing now, you won’t regret it</b>.
 						<br />
                             <br />
-                            For a glimpse at <b>our profits</b> or <b>the growth of the market and comparisons to the stock market</b>, click the buttons below.
+                            For a glimpse at <b>our track record/profits</b> or <b>the growth of the market and comparisons to the stock market</b>, click the buttons below. Be sure to move your cursor over the graphs to view the numbers!
 						<br />
-                            <a className="button">Our Track Record</a>
-                            <a className="button">Market Comparisons</a>
                             <br />
-                            <br />
-                            Ultimately, the streetwear market is < b > more predictable, less volatile</b >, and thus has a < b > greater potential</b > for profit than other open markets.
-					</p >
+                            <a className="button" onClick={trackRecord}>Track Record</a>
+                            <a className="button" onClick={marketComparison()}>Market Comparisons</a>
+                            <div id="button_text" align="left"></div>
+                            Ultimately, the streetwear market is <b>more predictable, less volatile</b>, and thus has a <b>greater potential</b> for profit than other open markets. As an experienced group of resellers and investors in the streetwear market, we can leverage this potential for better returns.
+					    </p>
                         <br />
-                    </div >
-                </section >
+                    </div>
+                </section>
                 <section id="why" className="wrapper style2 special fade">
                     <div className="container">
                         <header>
