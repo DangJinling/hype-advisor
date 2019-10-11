@@ -44,6 +44,7 @@ export class Agreement extends Component {
                     if (result.statusText === 'OK') {
                         // this.setState({ registerSuccess: true });
                         // this.showModal();
+                        alert('Thank for singing up. Please check your email to active the account.');
                         this.setState({
                             visible: false,
                             RedirectStatus: true,
