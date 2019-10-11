@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PDF from 'react-pdf-js';
 import { register } from '../../actions/auth';
 import pdfFile from '../../asset/Terms and Conditions.pdf';
 import './Agreement.css';
+import letter_logo from './images/letter_logo.png';
 
 export class Agreement extends Component {
     state = {
@@ -108,17 +109,40 @@ export class Agreement extends Component {
             return <Redirect to={path} />;
         }
         return (
-            <div style={{width:612, margin: '20px auto'}}>
-                {!loaded ? 
-                    <span>loading...</span>
-                    :
-                    null
-                }
-                <div style={{ overflowY:'auto', overflowX:"hidden", height:580}}>
-                    <PDF file={pdfFile} onDocumentComplete={this.onDocumentComplete} page={currentPage} />
+            <div id="page-wrapper">
+                {/* <!-- Header --> */}
+                <header id="header">
+                    <h1 id="logo">
+                        <a href="#" >
+                            <img src={letter_logo} alt="" style={{ float: 'right', height: '40px', margin: '10px 0px' }} />
+                        </a>
+                    </h1>
+                    <nav id="nav">
+                        <ul>
+                            <li>
+                                <a href="#">About</a>
+                                <ul>
+                                    <li><a href="#story" className="scrolly">Our Story</a></li>
+                                    <li><a href="#service" className="scrolly">Our Service</a></li>
+                                    <li><a href="#industry" className="scrolly">The Industry</a></li>
+                                    <li><a href="#why" className="scrolly">Why Us</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </header>
+                <div style={{width:612, margin: '60px auto 10px auto'}}>
+                    {!loaded ? 
+                        <span>loading...</span>
+                        :
+                        null
+                    }
+                    <div style={{ overflowY:'auto', overflowX:"hidden", height:580}}>
+                        <PDF file={pdfFile} onDocumentComplete={this.onDocumentComplete} page={currentPage} />
+                    </div>
+                    {numPages > 1 && this.renderPagination(currentPage, numPages)}
+                    {numPages && this.renderForm()}
                 </div>
-                {numPages > 1 && this.renderPagination(currentPage, numPages)}
-                {numPages && this.renderForm()}
             </div>
         )
     }

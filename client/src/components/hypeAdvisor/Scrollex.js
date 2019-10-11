@@ -1059,8 +1059,8 @@ export class Scrollex extends Component {
                                     </div>
                                     <div className="col-3 col-12-xsmall">
                                         <ul className="actions">
-                                            <li><a href="mailto:team@thehypeadvisor.com" className="button">Contact Us</a></li>
                                             <li><input type="submit" value="Join Us" className="primary" /></li>
+                                            <li><a href="mailto:team@thehypeadvisor.com" className="button">Contact Us</a></li>
                                         </ul>
                                     </div>
                                 </div>
