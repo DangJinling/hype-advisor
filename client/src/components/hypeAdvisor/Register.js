@@ -21,19 +21,22 @@ export class Register extends Component {
         e.preventDefault();
         const { first_name, last_name, email, password, password2, amount } = this.state;
         if (password !== password2) {
-            this.props.createMessage({ passwordNotMatch: 'Password do not match.' })
+            // this.props.createMessage({ passwordNotMatch: 'Password do not match.' })
+            alert('Password do not match.');
         } else {
-            const newUser = {
-                first_name,
-                last_name,
-                password,
-                email,
-                amount
+            if (email && amount !== '' && first_name && last_name) {
+                const newUser = {
+                    first_name,
+                    last_name,
+                    password,
+                    email,
+                    amount
+                }
+                this.props.history.push({ pathname: '/agreement', state: { data: JSON.stringify(newUser) } })
             }
-            this.props.history.push({ pathname:'/agreement',state:{data : JSON.stringify(newUser) } })
         }
     }
- 
+
 
     onChange = e => {
         this.setState({ [e.target.name]: e.target.value })
@@ -68,7 +71,7 @@ export class Register extends Component {
                         </ul>
                     </nav>
                 </header>
-                <div style={{ width: '50%', margin: '0 auto', paddingTop:60 }}>
+                <div style={{ width: '50%', margin: '0 auto', paddingTop: 60 }}>
                     <div className='card card-body mt-5'>
                         <h2 className='text-center' style={{ textAlign: 'center' }}>Register</h2>
                         <form onSubmit={this.onSubmit}>
@@ -82,7 +85,7 @@ export class Register extends Component {
                                     value={username}
                                 />
                             </div> */}
-                            <div className='col-6 col-12-xsmall' style={{display:'flex',flexDirection:'row',marginTop: 10 }}>
+                            <div className='col-6 col-12-xsmall' style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}>
                                 <label>Email</label>
                                 <input
                                     type='email'
@@ -92,7 +95,7 @@ export class Register extends Component {
                                     value={email}
                                 />
                             </div>
-                            <div className='form-group' style={{display:'flex',flexDirection:'row',marginTop: 10 }}>
+                            <div className='form-group' style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}>
                                 <label>First Name</label>
                                 <input
                                     type='text'
@@ -102,7 +105,7 @@ export class Register extends Component {
                                     value={first_name}
                                 />
                             </div>
-                            <div className='form-group' style={{display:'flex',flexDirection:'row',marginTop: 10 }}>
+                            <div className='form-group' style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}>
                                 <label>Last Name</label>
                                 <input
                                     type='text'
@@ -112,7 +115,7 @@ export class Register extends Component {
                                     value={last_name}
                                 />
                             </div>
-                            <div className='form-group' style={{display:'flex',flexDirection:'row',marginTop: 10 }}>
+                            <div className='form-group' style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}>
                                 <label>Amount</label>
                                 <input
                                     type='text'
@@ -122,7 +125,7 @@ export class Register extends Component {
                                     value={amount}
                                 />
                             </div>
-                            <div className='form-group' style={{display:'flex',flexDirection:'row',marginTop: 10 }}>
+                            <div className='form-group' style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}>
                                 <label>Password</label>
                                 <input
                                     type='password'
@@ -132,7 +135,7 @@ export class Register extends Component {
                                     value={password}
                                 />
                             </div>
-                            <div className='form-group' style={{display:'flex',flexDirection:'row',marginTop: 10 }}>
+                            <div className='form-group' style={{ display: 'flex', flexDirection: 'row', marginTop: 10 }}>
                                 <label>Confirm Password</label>
                                 <input
                                     type='password'
@@ -142,7 +145,7 @@ export class Register extends Component {
                                     value={password2}
                                 />
                             </div>
-                            <div className='form-group' style={{ marginTop: 10, textAlign:'right' }}>
+                            <div className='form-group' style={{ marginTop: 10, textAlign: 'right' }}>
                                 {/* <Link to='/agreement' >
                                     <button type='button' className="button primary">Next</button>
                                 </Link> */}
@@ -150,15 +153,15 @@ export class Register extends Component {
                                     Next
                                 </button>
                             </div>
-                            <p style={{ marginTop: 10, textAlign:'right' }}>
+                            <p style={{ marginTop: 10, textAlign: 'right' }}>
                                 Already have an account? <Link to='/login'>Login</Link>
                             </p>
-                        </form>                 
+                        </form>
                     </div>
                 </div>
             </div>
-            
-            
+
+
         )
     }
 }

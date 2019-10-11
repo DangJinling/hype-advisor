@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserInfo
-        fields = ('id','username', 'email')
+        fields = ('id','username', 'email', 'is_superuser')
         # fields = '__all__'
 # Register Serializer
 
@@ -22,7 +22,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         # user = User.objects.create_user(username=(validated_data['first_name'] + ' ' + validated_data['last_name']), email=validated_data['email'], password=validated_data['password'])
-        user = UserInfo.objects.create_user(username=validated_data['email'], email=validated_data['email'], password=validated_data['password'], first_name=validated_data['first_name'], last_name=validated_data['last_name'], amount=validated_data['amount'])
+        user = UserInfo.objects.create_user(username=validated_data['email'], email=validated_data['email'], password=validated_data['password'], first_name=validated_data['first_name'], last_name=validated_data['last_name'], amount=validated_data['amount'], is_superuser=False)
         return user
 
 
