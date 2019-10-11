@@ -9,6 +9,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
+from .models import UserInfo
 from .tokens import account_activation_token
 
 # Register API
@@ -29,6 +30,7 @@ class RegisterAPI(generics.GenericAPIView):
         register = RegisterSerializer()
         user = register.create(validated_data=request.data)
         user.is_active = False
+        # user.amount =
         user.save()
         # token = AuthToken.objects.create(user)[1]
         token = account_activation_token.make_token(user)
@@ -87,7 +89,7 @@ class ActiveAPI(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         try:
             uid = force_text(urlsafe_base64_decode(request.query_params['uidb64']))
-            user = User.objects.get(pk=uid)
+            user = UserInfo.objects.get(pk=uid)
         except(TypeError, ValueError, OverflowError, User.DoesNotExist):
             user = None
         if user is not None and account_activation_token.check_token(user, request.query_params['token']):

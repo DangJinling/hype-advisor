@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Modal } from 'antd';
 import { Link, Redirect } from 'react-router-dom';
 import PDF from 'react-pdf-js';
 import { register } from '../../actions/auth';
@@ -14,32 +15,42 @@ export class Agreement extends Component {
         agreeMentRaion: "agree",
         RedirectStatus: false,
         RedirectPath: null,
+        visible: false,
     }
 
+    handleOk = e => {
+        console.log(e);
+        this.setState({
+            visible: false,
+            RedirectStatus: true,
+            RedirectPath: "#"
+        });
+    };
+
     onDocumentComplete = numPages => {
-        this.setState({ numPages, loaded: numPages ? true:false });
+        this.setState({ numPages, loaded: numPages ? true : false });
     };
 
     onSubmit = e => {
         e.preventDefault();
         // this.props.location.state.data
         const { agreeMentRaion } = this.state;
-        if("agree" === agreeMentRaion){
+        if ("agree" === agreeMentRaion) {
             const data = this.props.location.state.data;
             const dataObj = JSON.parse(data);
-            if(dataObj.first_name && dataObj.last_name && dataObj.password && dataObj.email && dataObj.amount){
+            if (dataObj.first_name && dataObj.last_name && dataObj.password && dataObj.email && dataObj.amount) {
                 const response = register(data);
                 response.then(result => {
                     if (result.statusText === 'OK') {
-                        this.setState({ registerSuccess: true });
+                        // this.setState({ registerSuccess: true });
+                        this.showModal();
                     }
                 })
-            }else{
-                this.setState({ RedirectStatus: true, RedirectPath: "register"});
+            } else {
+                this.setState({ RedirectStatus: true, RedirectPath: "register" });
             }
-            
-        }else if("deny" === agreeMentRaion){
-            this.setState({ RedirectStatus: true, RedirectPath: "#"});
+        } else if ("deny" === agreeMentRaion) {
+            this.setState({ RedirectStatus: true, RedirectPath: "#" });
         }
     }
 
@@ -51,13 +62,19 @@ export class Agreement extends Component {
         console.log("----")
     }
 
+    showModal = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
     setPage = (page) => {
         const { numPages } = this.state;
         let currentPage = page;
-        if(page > numPages && page < 0 ){
+        if (page > numPages && page < 0) {
             currentPage = 1;
         }
-        this.setState({ currentPage})
+        this.setState({ currentPage })
     }
 
     renderPagination = (page, pages) => {
@@ -77,8 +94,8 @@ export class Agreement extends Component {
         return (
             <div className="PaginationFooter">
                 <ul className="pager">
-                    { page !== 1 && previousButton}
-                    { page != pages && nextButton}
+                    {page !== 1 && previousButton}
+                    {page != pages && nextButton}
                 </ul>
             </div>
         );
@@ -88,10 +105,10 @@ export class Agreement extends Component {
         const { agreeMentRaion } = this.state;
         return (
             <form onSubmit={this.onSubmit}>
-                <div style={{marginTop:20}}>
-                    <label><input name="agreeMentRaion" type="radio" value="agree" onClick={this.onChange} checked={agreeMentRaion === 'agree'}/>Agree</label>
-                    <label><input name="agreeMentRaion" type="radio" value="deny" onClick={this.onChange} checked={agreeMentRaion === 'deny'}/>Deny</label>
-                    <div style={{float:'right'}}>
+                <div style={{ marginTop: 20 }}>
+                    <label><input name="agreeMentRaion" type="radio" value="agree" onClick={this.onChange} checked={agreeMentRaion === 'agree'} />Agree</label>
+                    <label><input name="agreeMentRaion" type="radio" value="deny" onClick={this.onChange} checked={agreeMentRaion === 'deny'} />Deny</label>
+                    <div style={{ float: 'right' }}>
                         <button type='submit' className="button primary">Submit</button>
                     </div>
                 </div>
@@ -99,50 +116,51 @@ export class Agreement extends Component {
         )
     }
 
-  
+
 
 
     render() {
-        const { currentPage, loaded, numPages, RedirectStatus, RedirectPath }  = this.state;
+        const { currentPage, loaded, numPages, RedirectStatus, RedirectPath, visible } = this.state;
         if (RedirectStatus && RedirectPath) {
             const path = `/${RedirectPath}`;
             return <Redirect to={path} />;
         }
         return (
-            <div id="page-wrapper">
-                {/* <!-- Header --> */}
-                <header id="header">
-                    <h1 id="logo">
-                        <a href="#" >
-                            <img src={letter_logo} alt="" style={{ float: 'right', height: '40px', margin: '10px 0px' }} />
-                        </a>
-                    </h1>
-                    <nav id="nav">
-                        <ul>
-                            <li>
-                                <a href="#">About</a>
-                                <ul>
-                                    <li><a href="#story" className="scrolly">Our Story</a></li>
-                                    <li><a href="#service" className="scrolly">Our Service</a></li>
-                                    <li><a href="#industry" className="scrolly">The Industry</a></li>
-                                    <li><a href="#why" className="scrolly">Why Us</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                </header>
-                <div style={{width:612, margin: '60px auto 10px auto'}}>
-                    {!loaded ? 
+            <div>
+                <div style={{ width: 612, margin: '20px auto' }}>
+                    {!loaded ?
                         <span>loading...</span>
                         :
                         null
                     }
-                    <div style={{ overflowY:'auto', overflowX:"hidden", height:580}}>
+                    <div style={{ overflowY: 'auto', overflowX: "hidden", height: 180 }}>
                         <PDF file={pdfFile} onDocumentComplete={this.onDocumentComplete} page={currentPage} />
                     </div>
                     {numPages > 1 && this.renderPagination(currentPage, numPages)}
                     {numPages && this.renderForm()}
+                    <Modal
+                        // centered
+                        style={{ top: 10 }}
+                        title="Register result"
+                        visible={visible}
+                        onOk={this.handleOk}
+                        zIndex={999}
+                    >
+                        <p>Thank for singing up.</p>
+                    </Modal>
                 </div>
+                {/* <Modal
+                    // centered
+                    style={{ top: 10 }}
+                    title="Basic Modal"
+                    visible={visible}
+                    onOk={this.handleOk}
+                    zIndex={999}
+                >
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </Modal> */}
             </div>
         )
     }
