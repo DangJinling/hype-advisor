@@ -8,7 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
+# build/
 develop-eggs/
 dist/
 downloads/
@@ -106,7 +106,6 @@ venv.bak/
 
 db.sqlite3
 node_modules
-build
 /.pnp
 .pnp.js
 
@@ -114,7 +113,7 @@ build
 /coverage
 
 # production
-/build
+# /build
 
 # misc
 .DS_Store
