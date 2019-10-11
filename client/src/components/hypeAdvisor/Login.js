@@ -94,6 +94,17 @@ export class Login extends Component {
                         </form>
                     </div>
                 </div >
+                <div style={{position:'absolute',bottom:0, marginLeft: -350, left:'50%'}}>
+                    <footer style={{textAlign:'center', width:700}}>
+                        <ul className="icons" style={{marginBottom:20}}>
+                            <li><a href="http://instagram.com/thehypeadvisor" className="icon alt fa-instagram"><span className="label">Instagram</span></a></li>
+                            <li><a href="mailto:team@thehypeadvisor.com" className="icon alt fa-envelope"><span className="label">Email</span></a></li>
+                        </ul>
+                        <ul className="copyright">
+                            <li>&copy; The Hype Advisor.</li><li>Built by: <a href="http://m1ch43lw4ng.com">Michael Wang</a></li><li>Last Updated: June 22nd, 2019</li>
+                        </ul>
+                    </footer>
+                </div>
             </div>
         )
     }
