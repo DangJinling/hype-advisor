@@ -191,8 +191,7 @@ city1.append("text")
     }).attr('fill', 'white')
     .attr("transform", function(d) {
         console.log(d.value.date)
-        // return "translate(" + x(d.value.date) + "," + y(d.value.price) + ")";
-        return "translate(x(" + d.value.date + "),y(" + d.value.price + "))";
+        return "translate(" + x1(d.value.date) + "," + y1(d.value.price) + ")";
     })
     .attr("x", 3)
     .attr("dy", ".35em").attr('fill', 'white')

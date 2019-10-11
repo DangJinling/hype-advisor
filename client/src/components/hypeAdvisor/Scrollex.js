@@ -4,6 +4,7 @@ import letter_logo from './images/letter_logo.png';
 import new_logo_no_border from './images/new_logo_no_border.png';
 import service from './images/service.png';
 import './main.css';
+import './chart.css';
 import $ from 'jquery';
 // import './js/jquery.min.js';
 import './js/jquery.scrolly.min.js';
