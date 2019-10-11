@@ -141,14 +141,12 @@ export class Agreement extends Component {
                     <Modal
                         // centered
                         style={{ top: 10 }}
-                        title="Basic Modal"
+                        title="Register result"
                         visible={visible}
                         onOk={this.handleOk}
                         zIndex={999}
                     >
-                        <p>Some contents...</p>
-                        <p>Some contents...</p>
-                        <p>Some contents...</p>
+                        <p>Thank for singing up.</p>
                     </Modal>
                 </div>
                 {/* <Modal
