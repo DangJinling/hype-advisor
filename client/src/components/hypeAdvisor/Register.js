@@ -217,10 +217,8 @@ export class Register extends Component {
         e.preventDefault();
         const { first_name, last_name, email, password, password2, amount } = this.state;
         if (password !== password2) {
-            // this.props.createMessage({ passwordNotMatch: 'Password do not match.' })
-            // alert('Password do not match.');
             Alert.open({
-                alertTip: "Password do not match.",
+                alertTip: "Password does not match.",
                 closeAlert: function () {
                     console.log("clsose alert...");
                 }
