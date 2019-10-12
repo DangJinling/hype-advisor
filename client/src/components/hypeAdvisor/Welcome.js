@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { getRegisterUser, getSubscribedUser } from '../../actions/auth';
 import letter_logo from './images/letter_logo.png';
+
 
 export class Welcome extends Component {
     constructor(props) {
@@ -8,37 +10,105 @@ export class Welcome extends Component {
         this.state = {
             user: props.user,
             is_superuser: true,
-            currentTab: "Subscribed"
+            currentTab: "Subscribed",
+            registerUserList: [],
+            subscribedUserList: [],
         }
     }
 
+
+
     clickTab = (e) => {
         this.setState({ currentTab: e.target.name}, ()=>{
-
         });
-       
+        e.target.name === "Subscribed" ? this.getSubscribedUserList() : this.getRegisterUserList();
+    }
+
+    getRegisterUserList = () => {
+        const response = getRegisterUser();
+        response.then(result => {
+            if( result.status === 200 && result.statusText === 'OK'){
+                this.setState({ registerUserList: result.data });
+            }
+        })
+    }
+
+    getSubscribedUserList = () => {
+        const response = getSubscribedUser();
+        response.then(result => {
+            if( result.status === 200 && result.statusText === 'OK'){
+                this.setState({ subscribedUserList: result.data });
+            }
+        })
     }
 
 
 
     renderSubscribed =() => {
+        const { subscribedUserList } = this.state;
+        subscribedUserList.forEach(element => {
+            console.log("=====");
+        });
+        
         return (
-            <div style={{ width: '100%', height: '450px', position: 'relative' }}>
-                <div style={{
-                    position: 'absolute', top: '50%', left: '50%',
-                    marginTop: '-100px',
-                    marginLeft: '-750px',
-                    width: "100%",
-                    height: "200px",
-                }}>
-                    <p style={{ textAlign: 'center' }}><h2>Subscribed User List</h2> </p>
-                </div>
-            </div>
+            <div style={{overflowX:'auto',padding:20}}>
+                    <table id="flips_table" className="table"> 
+                        <thead>
+                            <tr>
+                                <th>Name ↑↓</th>
+                                <th>Quantity ↑↓</th>
+                                <th>Buy Price (per item)</th>
+                                <th>Buy Date</th>
+                                <th>Sell Price (per item)</th>
+                                <th>Sell Date</th>
+                                <th>Time Held ↑↓</th>
+                                <th>Fees</th>
+                                <th>Gross Gain / Loss ↑↓</th>
+                                <th>Net Gain / Loss ↑↓</th>
+                                <th>Return on Investment (%) ↑↓</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Yeezy 350 v2 Glow</td>
+                                <td>4</td>
+                                <td>$470</td>
+                                <td>5/25/19</td>
+                                <td>$650</td>
+                                <td>7/14/19</td>
+                                <td>02 months</td>
+                                <td>$208</td>
+                                <td><font color="#11d128">$720</font></td>
+                                <td><font color="#11d128">$512</font></td>
+                                <td><font color="#11d128">27%</font></td>
+                            </tr>
+                            <tr>
+                                <td>Travis Scott Air Jordan 4</td>
+                                <td>5</td>
+                                <td>$330</td>
+                                <td>12/13/18</td>
+                                <td>$528</td>
+                                <td>7/14/19</td>
+                                <td>07 months</td>
+                                <td>$211</td>
+                                <td><font color="#11d128">$990</font></td>
+                                <td><font color="#11d128">$779</font></td>
+                                <td><font color="#11d128">47%</font></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table> 
+                </div> 
         )
     }
 
 
     renderRegistered = () => {
+        const { registerUserList } = this.state;
+        registerUserList.forEach(element => {
+            console.log("=====");
+        });
+        
         return (
             <div style={{ width: '100%', height: '450px', position: 'relative' }}>
                 <div style={{
@@ -55,9 +125,27 @@ export class Welcome extends Component {
     }
 
 
+    renderWelcome = () => {
+        const { user } = this.state;
+        return (
+            <div style={{ width: '100%', height: '450px', position: 'relative' }}>
+                <div style={{
+                    position: 'absolute', top: '50%', left: '50%',
+                    marginTop: '-100px',
+                    marginLeft: '-750px',
+                    width: "100%",
+                    height: "200px",
+                }}>
+                    <p style={{ textAlign: 'center' }}>Welcome <h2>{user.username}</h2> </p>
+                </div>
+            </div>
+        ) 
+    }
+
+
 
     render() {
-        const { user, is_superuser, currentTab } = this.state;
+        const { is_superuser, currentTab } = this.state;
         return (
             <div>
                 <header id="header">
@@ -75,12 +163,12 @@ export class Welcome extends Component {
                 {
                     is_superuser ? (
                         <div>
-                            <section id="industry" className="wrapper style1 special fade">
+                            <section id="industry" className="wrapper style1 special fade" style={{paddingTop: 60}}>
                                 <div className="container">
                                     <br />
                                     <a className="button"  onClick={this.clickTab} name='Subscribed'>Subscribed User</a>
                                     <a className="button" onClick={this.clickTab} name="Registered">Registered User</a>
-                                    <div>
+                                    <div style={{paddingTop:20}}>
                                         {
                                             "Subscribed" === currentTab ? (
                                                 this.renderSubscribed()
@@ -92,19 +180,9 @@ export class Welcome extends Component {
                                 </div>
                             </section>
                         </div>
-                    ):(
-                    <div style={{ width: '100%', height: '450px', position: 'relative' }}>
-                        <div style={{
-                            position: 'absolute', top: '50%', left: '50%',
-                            marginTop: '-100px',
-                            marginLeft: '-750px',
-                            width: "100%",
-                            height: "200px",
-                        }}>
-                            <p style={{ textAlign: 'center' }}>Welcome <h2>{user.username}</h2> </p>
-                        </div>
-                    </div>
                     )
+                    :
+                    this.renderWelcome()
                 }
                 
                 <div style={{position:'absolute',bottom:0, marginLeft: -350, left:'50%'}}>

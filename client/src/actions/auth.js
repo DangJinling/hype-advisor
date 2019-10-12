@@ -14,3 +14,14 @@ export async function register(body) {
     let response = axios.post(`${server}/api/auth/register`, body);
     return response;
 }
+
+export async function getRegisterUser() {
+    let response = axios.get(`${server}/api/auth/getUsers`);
+    return response;
+}
+
+
+export async function getSubscribedUser() {
+    let response = axios.get(`${server}/api/subscribed`);
+    return response;
+}
