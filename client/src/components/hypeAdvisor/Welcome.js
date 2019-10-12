@@ -46,6 +46,12 @@ export class Welcome extends Component {
         })
     }
 
+    transformDateStr = (dateStr) => {
+        const d = new Date(dateStr);
+        const str = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+        return str;
+    }
+
 
 
     renderSubscribed = () => {
@@ -65,7 +71,7 @@ export class Welcome extends Component {
                             <tr key={user.id}>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                <td>{user.created_at}</td>
+                                <td>{this.transformDateStr(user.created_at)}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -77,6 +83,7 @@ export class Welcome extends Component {
 
     renderRegistered = () => {
         const { registerUserList } = this.state;
+
 
         return (
             <div style={{ overflowX: 'auto', padding: 20 }}>
@@ -95,10 +102,10 @@ export class Welcome extends Component {
                         {registerUserList.map(user => (
                             <tr key={user.id}>
                                 <td>{user.email}</td>
-                                <td>{user.amount}</td>
                                 <td>{user.first_name}</td>
                                 <td>{user.last_name}</td>
-                                <td>{user.date_joined}</td>
+                                <td>{user.amount}</td>
+                                <td>{this.transformDateStr(user.date_joined)}</td>
                                 {/* <td>{user.is_active ? 'True' : 'False'}</td> */}
                             </tr>
                         ))}
@@ -169,17 +176,15 @@ export class Welcome extends Component {
                         this.renderWelcome()
                 }
 
-                <div style={{ position: 'absolute', bottom: 0, marginLeft: -350, left: '50%' }}>
-                    <footer style={{ textAlign: 'center', width: 700 }}>
-                        <ul className="icons" style={{ marginBottom: 20 }}>
-                            <li><a href="http://instagram.com/thehypeadvisor" className="icon alt fa-instagram"><span className="label">Instagram</span></a></li>
-                            <li><a href="mailto:team@thehypeadvisor.com" className="icon alt fa-envelope"><span className="label">Email</span></a></li>
-                        </ul>
-                        <ul className="copyright">
-                            <li>&copy; The Hype Advisor.</li><li>Built by: <a href="http://m1ch43lw4ng.com">Michael Wang</a></li><li>Last Updated: June 22nd, 2019</li>
-                        </ul>
-                    </footer>
-                </div>
+                <footer style={{ textAlign: 'center', width: 700 }}>
+                    <ul className="icons" style={{ marginBottom: 20 }}>
+                        <li><a href="http://instagram.com/thehypeadvisor" className="icon alt fa-instagram"><span className="label">Instagram</span></a></li>
+                        <li><a href="mailto:team@thehypeadvisor.com" className="icon alt fa-envelope"><span className="label">Email</span></a></li>
+                    </ul>
+                    <ul className="copyright">
+                        <li>&copy; The Hype Advisor.</li><li>Built by: <a href="http://m1ch43lw4ng.com">Michael Wang</a></li><li>Last Updated: June 22nd, 2019</li>
+                    </ul>
+                </footer>
             </div>
 
         )

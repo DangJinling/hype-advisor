@@ -47,7 +47,7 @@ export class Agreement extends Component {
                         // this.setState({ registerSuccess: true });
                         // this.showModal();
                         Alert.open({
-                            alertTip: "Thank for singing up. Please check your email to active the account.",
+                            alertTip: "Thank for singing up. Please check your email to activate.",
                             closeAlert: function () {
                                 that.setState({
                                     visible: false,
@@ -181,17 +181,15 @@ export class Agreement extends Component {
                         <p>Thank for singing up.</p>
                     </Modal> */}
                 </div>
-                <div style={{ position: 'absolute', bottom: 0, marginLeft: -350, left: '50%' }}>
-                    <footer style={{ textAlign: 'center', width: 700 }}>
-                        <ul className="icons" style={{ marginBottom: 20 }}>
-                            <li><a href="http://instagram.com/thehypeadvisor" className="icon alt fa-instagram"><span className="label">Instagram</span></a></li>
-                            <li><a href="mailto:team@thehypeadvisor.com" className="icon alt fa-envelope"><span className="label">Email</span></a></li>
-                        </ul>
-                        <ul className="copyright">
-                            <li>&copy; The Hype Advisor.</li><li>Built by: <a href="http://m1ch43lw4ng.com">Michael Wang</a></li><li>Last Updated: June 22nd, 2019</li>
-                        </ul>
-                    </footer>
-                </div>
+                <footer style={{ textAlign: 'center', width: 700 }}>
+                    <ul className="icons" style={{ marginBottom: 20 }}>
+                        <li><a href="http://instagram.com/thehypeadvisor" className="icon alt fa-instagram"><span className="label">Instagram</span></a></li>
+                        <li><a href="mailto:team@thehypeadvisor.com" className="icon alt fa-envelope"><span className="label">Email</span></a></li>
+                    </ul>
+                    <ul className="copyright">
+                        <li>&copy; The Hype Advisor.</li><li>Built by: <a href="http://m1ch43lw4ng.com">Michael Wang</a></li><li>Last Updated: June 22nd, 2019</li>
+                    </ul>
+                </footer>
             </div>
         )
     }
