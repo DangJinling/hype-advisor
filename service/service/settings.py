@@ -84,7 +84,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'service.wsgi.application'
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000', 'http://35.230.8.228:8000']
 
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -181,19 +181,19 @@ STATICFILES_DIRS = [
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, "static"),  # 静态文件目录位置
 # )
+#
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp-mail.outlook.com'
+# EMAIL_PORT = 587
+# DEFAULT_FROM_EMAIL = 'ngo-skt@outlook.com'
+# EMAIL_HOST_USER = 'ngo-skt@outlook.com'
+# EMAIL_HOST_PASSWORD = 'ngo@sktlab'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'ngo-skt@outlook.com'
-EMAIL_HOST_USER = 'ngo-skt@outlook.com'
-EMAIL_HOST_PASSWORD = 'ngo@sktlab'
-
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# DEFAULT_FROM_EMAIL = 'dev.ngorganize@gmail.com'
-# EMAIL_HOST_USER = 'dev.ngorganize@gmail.com'
-# EMAIL_HOST_PASSWORD = 'NgoDev201('
+DEFAULT_FROM_EMAIL = 'dev.ngorganize@gmail.com'
+EMAIL_HOST_USER = 'dev.ngorganize@gmail.com'
+EMAIL_HOST_PASSWORD = 'NgoDev201('

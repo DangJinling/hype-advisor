@@ -145,7 +145,7 @@ export class Welcome extends Component {
 
 
     render() {
-        const { is_superuser, currentTab } = this.state;
+        const { user, currentTab } = this.state;
         return (
             <div>
                 <header id="header">
@@ -161,20 +161,20 @@ export class Welcome extends Component {
                     </nav>
                 </header>
                 {
-                    is_superuser ? (
+                    user.is_superuser ? (
                         <div>
                             <section id="industry" className="wrapper style1 special fade" style={{paddingTop: 60}}>
                                 <div className="container">
                                     <br />
-                                    <a className="button"  onClick={this.clickTab} name='Subscribed'>Subscribed User</a>
+                                    <a className="button" onClick={this.clickTab} name='Subscribed'>Subscribed User</a>
                                     <a className="button" onClick={this.clickTab} name="Registered">Registered User</a>
                                     <div style={{paddingTop:20}}>
                                         {
                                             "Subscribed" === currentTab ? (
                                                 this.renderSubscribed()
-                                            ):(
-                                                this.renderRegistered()
-                                            )
+                                            ) : (
+                                                    this.renderRegistered()
+                                                )
                                         }
                                     </div>
                                 </div>
@@ -184,10 +184,10 @@ export class Welcome extends Component {
                     :
                     this.renderWelcome()
                 }
-                
-                <div style={{position:'absolute',bottom:0, marginLeft: -350, left:'50%'}}>
-                    <footer style={{textAlign:'center', width:700}}>
-                        <ul className="icons" style={{marginBottom:20}}>
+
+                <div style={{ position: 'absolute', bottom: 0, marginLeft: -350, left: '50%' }}>
+                    <footer style={{ textAlign: 'center', width: 700 }}>
+                        <ul className="icons" style={{ marginBottom: 20 }}>
                             <li><a href="http://instagram.com/thehypeadvisor" className="icon alt fa-instagram"><span className="label">Instagram</span></a></li>
                             <li><a href="mailto:team@thehypeadvisor.com" className="icon alt fa-envelope"><span className="label">Email</span></a></li>
                         </ul>

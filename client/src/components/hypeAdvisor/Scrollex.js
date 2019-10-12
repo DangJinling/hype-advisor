@@ -26,11 +26,11 @@ import { trackRecord, marketComparison } from './js/buttons.js';
 import { Link } from 'react-router-dom';
 // import jquery from '../hypeAdvisor/js/jquery.min.js';
 // import sortable from '../hypeAdvisor/js/jquery.sortable.min.js';
-import  { industry_chart_scale } from '../hypeAdvisor/js/industry_chart';
-import  { stock1_scale } from '../hypeAdvisor/js/stock1';
-import  { stock2_scale } from '../hypeAdvisor/js/stock2';
-import  { stock3_scale } from '../hypeAdvisor/js/stock3';
-import  { stock4_scale } from '../hypeAdvisor/js/stock4';
+import { industry_chart_scale } from '../hypeAdvisor/js/industry_chart';
+import { stock1_scale } from '../hypeAdvisor/js/stock1';
+import { stock2_scale } from '../hypeAdvisor/js/stock2';
+import { stock3_scale } from '../hypeAdvisor/js/stock3';
+import { stock4_scale } from '../hypeAdvisor/js/stock4';
 
 import { nothing, text1, text2 } from './js/Button';
 
@@ -565,7 +565,7 @@ export class Scrollex extends Component {
         console.log("====");
         const temp = (
             <div>{x.innerHTML}</div>
-          );
+        );
         if (current === 0) {
             current = 2;
             x.innerHTML = text2;
@@ -613,12 +613,12 @@ export class Scrollex extends Component {
         // script4.type = 'text/javascript';
         // script4.src = stock4;
         // head.appendChild(script4);
-        
+
     }
 
 
     trackRecord = () => {
-        
+
         var x = document.getElementById("button_text");
         // var temp = document.createElement("div");
         // temp.innerHTML = x.innerHTML;
@@ -626,17 +626,17 @@ export class Scrollex extends Component {
             <div>{x.innerHTML}</div>
         );
         if (current === 0) {
-        	current = 1;
-        	x.innerHTML = text1;
-        	this.reloadJSTrackRecord();
+            current = 1;
+            x.innerHTML = text1;
+            this.reloadJSTrackRecord();
         } else if (current === 2) {
-        	current = 1;
-        	x.innerHTML = text1 + text2;
-        	x.innerHTML = text1;
-        	this.reloadJSTrackRecord();
+            current = 1;
+            x.innerHTML = text1 + text2;
+            x.innerHTML = text1;
+            this.reloadJSTrackRecord();
         } else {
-        	current = 0;
-        	x.innerHTML = nothing;
+            current = 0;
+            x.innerHTML = nothing;
         }
     }
 
@@ -654,14 +654,14 @@ export class Scrollex extends Component {
         // head.appendChild(script1);
 
 
-        
+
     }
 
     renderTrackRecord = () => {
         return (
             <div>
-                <div style={{overflowX:'auto'}}>
-                    <table id="flips_table" className="table"> 
+                <div style={{ overflowX: 'auto' }}>
+                    <table id="flips_table" className="table">
                         <thead>
                             <tr>
                                 <th>Name ↑↓</th>
@@ -676,8 +676,8 @@ export class Scrollex extends Component {
                                 <th>Net Gain / Loss ↑↓</th>
                                 <th>Return on Investment (%) ↑↓</th>
                             </tr>
-                            </thead>
-                            <tbody>
+                        </thead>
+                        <tbody>
                             <tr>
                                 <td>Yeezy 350 v2 Glow</td>
                                 <td>4</td>
@@ -822,19 +822,19 @@ export class Scrollex extends Component {
                                 <td><font color="#d13b3c">-45%</font></td>
                             </tr>
                         </tbody>
-                    </table> 
-                </div>  
-                <br/>
+                    </table>
+                </div>
+                <br />
                 Above is the <b>complete portfolio</b> of investments we have made as a collective<sup>4</sup>.
                 The more confident we are in a certain streetwear item, the more we invest. Whether it be one month or one year investments, the majority of the items that we have held have proven to be profitable, with ROI’s ranging from 18% to 164% after transaction fees. In the bigger picture, the positives outweigh the negatives, resulting in a consistent net profit in our diverse portfolio.
-                <br/>
-                <br/>
+                <br />
+                <br />
                 Note that we calculated our final numbers by including an average 8% fee that transactions incur. Even with fees, however, streetwear can still turn extremely large profit margins.
-                <br/>
-                <br/>
+                <br />
+                <br />
                 <div className="asterisk"><sup>4</sup>Prior investments made by team members independently are uncharted.</div>
-                <br/>
-                <br/> 
+                <br />
+                <br />
             </div>
         )
     }
@@ -928,7 +928,7 @@ export class Scrollex extends Component {
                     <div className="container">
                         <header>
                             <h2>Our Service</h2>
-                            <p>A clothing and sneaker-based hedgefund with no barriers to entry.</p>
+                            <p>Generate passive income with streetwear investment</p>
                         </header>
                         <div className="box alt">
                             <div className="row gtr-50 gtr-uniform">
@@ -936,27 +936,27 @@ export class Scrollex extends Component {
                             </div>
                         </div>
                         <p align="left">
-                            We are a <b>niche hedge fund</b> that operates specifically in the streetwear market. Using our experience, connections, and data analysis, we buy items that we predict to be <b>bullish</b>: they increase in resell value over time. If you invest with us, we will put your capital into the market to buy and hold streetwear items. At any given time, you can log into your account<sup>1</sup> and check your portfolio, which displays your investments, their current values, and the reasoning behind the choice of each item. When your six-month investing time frame is completed, we will sell the items and transfer your money directly to your <b>PayPal account</b>.
+                            We are a <b>niche hedge fund</b> that operates specifically in the streetwear market. Using our experience, connections, and data analysis, we buy items that we predict to be <b>bullish</b>: they increase in resell value over time. If you invest with us, we will put your capital into the market to buy and hold streetwear items. We will update you periodically with your portfolio, which displays your investments, their current values, and the reasoning behind the investment.
+						<br />
                             <br />
+                            For each round, we will release <b>a limited amount of investment slots</b>, with a minimum investment amount of $100. We use each pool of investment money to create a diverse and balanced portfolio. Each client then owns a percentage of each item, which translates to a percentage of the total value.
+						<br />
                             <br />
-                            During the launch of our service, we will open up a <b>limited number of slots</b> for clients. Clients can invest starting at a low minimum of $100, with the money pooled together for the investment round and utilized to buy a diverse array of streetwear items. Each client then owns a percentage of each item, which translates to a percentage of the total value. Within each pool, we will also contribute a portion of our funds, <b>embarking along the journey with you</b>.
-                            <br />
-                            <br />
-                            At the end of the investing period, we will pay you your profit after taking a performance fee < sup > 3</sup > similar to traditional hedge funds.We will also return your original investment with a minimal management fee < sup > 3</sup > subtracted(since the acquisition of streetwear items is a tedious process).
-                            <br />
+                            When your six-month investing time frame is completed, we will sell the items, collect a management and performance fee, and wire the earnings <b>directly to your bank account</b>.
+{/* <!-- 						<br />
                             <br />
                             To stay updated on the launch of our service and sign up for a slot when they release, <b>be sure to <a href="#form" className="scrolly">give us your contact information</a></b>.
-                            <br />
-                        </p >
-                        <div className="asterisk">
+						<br /> --> */}
+                        </p>
+                        {/* <!-- 					<div className="asterisk">
                             <sup>1</sup>User interface and accounts on our website are still under construction. In the meantime, payments and updates will be coordinated through email and PayPal.
-                        <br />
+						<br />
                             <sup>2</sup>We are not affiliated with StockX, but their website provides a good basis for understanding the value of different items.
-                        <br />
-                            <sup>3</sup>Exact fees follow closely with the 2 and 20 rule for hedgefunds.Exact percentages are announced to those on our email list, and these fees are also subject to change, in which case we will notify all potential customers via email and update on our website and contracts.
-                        </div >
-                    </div >
-                </section >
+						<br />
+                            <sup>3</sup>Exact fees follow closely with the 2 and 20 rule for hedgefunds. Exact percentages are announced to those on our email list, and these fees are also subject to change, in which case we will notify all potential customers via email and update on our website and contracts.
+					</div> --> */}
+                    </div>
+                </section>
                 <section id="industry" className="wrapper style1 special fade">
                     <div className="container">
                         <header>
@@ -975,7 +975,7 @@ export class Scrollex extends Component {
                             <a className="button" onClick={this.trackRecord}>Track Record</a>
                             <a className="button" onClick={this.marketComparison}>Market Comparisons</a>
                             <div id="button_text" align="left">
-                                
+
                             </div>
                             Ultimately, the streetwear market is <b>more predictable, less volatile</b>, and thus has a <b>greater potential</b> for profit than other open markets. As an experienced group of resellers and investors in the streetwear market, we can leverage this potential for better returns.
 					    </p>
