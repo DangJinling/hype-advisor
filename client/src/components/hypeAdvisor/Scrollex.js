@@ -23,7 +23,7 @@ import './noscript.css';
 // import PropTypes from 'prop-types';
 import { addMember } from '../../actions/members';
 import { trackRecord, marketComparison } from './js/buttons.js';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 // import jquery from '../hypeAdvisor/js/jquery.min.js';
 // import sortable from '../hypeAdvisor/js/jquery.sortable.min.js';
 import { industry_chart_scale } from '../hypeAdvisor/js/industry_chart';
@@ -41,7 +41,8 @@ export class Scrollex extends Component {
         super(props)
         this.state = {
             name: '',
-            email: ''
+            email: '',
+            anchor: "",
         }
     }
 
@@ -51,7 +52,8 @@ export class Scrollex extends Component {
     }
 
     loadPage = () => {
-
+        var that = this;
+       
         var $window = $(window),
             $body = $('body');
 
@@ -94,130 +96,130 @@ export class Scrollex extends Component {
             '<a href="#navPanel" class="toggle"></a>' +
             '<span class="title">' + $('#logo').html() + '</span>' +
             '</div>'
-        )
-            .appendTo($body);
+        ).appendTo($body);
 
         // Panel.
         $(
             '<div id="navPanel">' +
             '<nav>' +
             $('#nav').navList() +
+            // '<a class="link depth-0" href="#"  style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">'+
+            //     '<span class="indent-0"></span>'+
+            //     'About'+
+            // '</a>'+
+            // // href="#story"
+            // `<a class="link depth-1"  id="storyMenu" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">`+
+            //     '<span class="indent-1"></span>'+
+            //     'Our Story'+
+            // '</a>'+
+            // '<a class="link depth-1" href="#service" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">'+
+            //     '<span class="indent-1"></span>'+
+            //     'Our Service'+
+            // '</a>'+
+            // '<a class="link depth-1" href="#industry" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">'+
+            //     '<span class="indent-1"></span>'+
+            //     'The Industry'+
+            // '</a>'+
+            // '<a class="link depth-1" href="#why" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">'+
+            //     '<span class="indent-1"></span>'+
+            //     'Why Us'+
+            // '</a>'+
+            // '<a class="link depth-0" href="#form" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">'+
+            //     '<span class="indent-0"></span>'+
+            //     'Contact'+
+            // '</a>'+
             '</nav>' +
             '</div>'
-        )
-            .appendTo($body)
-            .panel({
-                delay: 500,
-                hideOnClick: true,
-                hideOnSwipe: true,
-                resetScroll: true,
-                resetForms: true,
-                side: 'left',
-                target: $body,
-                visibleClass: 'navPanel-visible'
-            });
+        ).appendTo($body)
+        .panel({
+            delay: 500,
+            hideOnClick: true,
+            hideOnSwipe: true,
+            resetScroll: true,
+            resetForms: true,
+            side: 'left',
+            target: $body,
+            visibleClass: 'navPanel-visible'
+        });
+
+        $("#navPanel").find('a').each(function(index){
+            var $this = $(this);
+            $(this).on('click',function(){
+                var id = $this.attr("id");
+                var menu = "#";
+                menu = id.substring(0,id.length-4);
+                if(id.indexOf("/") >= 0 ){
+                    that.props.history.push({ pathname: menu, state: { data: "menu" } });
+                    $("#titleBar").empty();
+                    $("#titleBar").remove();
+                    $("#navPanel").remove();
+                }else if(id.indexOf("Menu") > 0 ){
+                    that.props.history.push({ pathname: '/', state: { data: "menu" } });
+                    that.onClickAnchor(menu);
+                }
+                $body.removeClass("navPanel-visible");
+            })
+          })
 
         // Parallax.
         // Disabled on IE (choppy scrolling) and mobile platforms (poor performance).
         if (browser.name === 'ie'
             || browser.mobile) {
-
             $.fn._parallax = function () {
-
                 return $(this);
-
             };
-
-        }
-        else {
-
+        }else {
             $.fn._parallax = function () {
-
                 $(this).each(function () {
-
-                    var $this = $(this),
-                        on, off;
-
+                    var $this = $(this),on, off;
                     on = function () {
-
-                        $this
-                            .css('background-position', 'center 0px');
-
-                        $window
-                            .on('scroll._parallax', function () {
-
-                                var pos = parseInt($window.scrollTop()) - parseInt($this.position().top);
-
-                                $this.css('background-position', 'center ' + (pos * -0.15) + 'px');
-
-                            });
-
+                        $this.css('background-position', 'center 0px');
+                        $window.on('scroll._parallax', function () {
+                            var pos = parseInt($window.scrollTop()) - parseInt($this.position().top);
+                            $this.css('background-position', 'center ' + (pos * -0.15) + 'px');
+                        });
                     };
 
                     off = function () {
-
-                        $this
-                            .css('background-position', '');
-
-                        $window
-                            .off('scroll._parallax');
-
+                        $this.css('background-position', '');
+                        $window.off('scroll._parallax');
                     };
 
                     breakpoints.on('<=medium', off);
                     breakpoints.on('>medium', on);
-
                 });
-
+                console.log("=========");
                 return $(this);
-
             };
 
-            $window
-                .on('load resize', function () {
-                    $window.trigger('scroll');
-                });
-
+            $window.on('load resize', function () {
+                $window.trigger('scroll');
+            });
         }
 
         // Spotlights.
         var $spotlights = $('.spotlight');
-
-        $spotlights
-            ._parallax()
-            .each(function () {
-
-                var $this = $(this),
-                    on, off;
-
+        $spotlights._parallax().each(function () {
+                var $this = $(this),on, off;
                 on = function () {
-
                     var top, bottom, mode;
-
                     // Use main <img>'s src as this spotlight's background.
                     // $this.css('background-image', 'url("' + $this.find('.image.main > img').attr('src') + '")');
-
                     // Side-specific scrollex tweaks.
                     if ($this.hasClass('top')) {
-
                         mode = 'top';
                         top = '-20%';
                         bottom = 0;
-
                     }
                     else if ($this.hasClass('bottom')) {
-
                         mode = 'bottom-only';
                         top = 0;
                         bottom = '20%';
-
                     }
                     else {
-
                         mode = 'middle';
                         top = 0;
                         bottom = 0;
-
                     }
 
                     // Add scrollex.
@@ -228,23 +230,16 @@ export class Scrollex extends Component {
                         initialize: function (t) { $this.addClass('inactive'); },
                         terminate: function (t) { $this.removeClass('inactive'); },
                         enter: function (t) { $this.removeClass('inactive'); },
-
                         // Uncomment the line below to "rewind" when this spotlight scrolls out of view.
-
                         //leave:	function(t) { $this.addClass('inactive'); },
-
                     });
-
                 };
 
                 off = function () {
-
                     // Clear spotlight's background.
                     $this.css('background-image', '');
-
                     // Remove scrollex.
                     $this.unscrollex();
-
                 };
 
                 breakpoints.on('<=medium', off);
@@ -254,28 +249,18 @@ export class Scrollex extends Component {
 
         // Wrappers.
         var $wrappers = $('.wrapper');
-
-        $wrappers
-            .each(function () {
-
-                var $this = $(this),
-                    on, off;
-
+        $wrappers.each(function () {
+                var $this = $(this),on, off;
                 on = function () {
-
                     $this.scrollex({
                         top: 250,
                         bottom: 0,
                         initialize: function (t) { $this.addClass('inactive'); },
                         terminate: function (t) { $this.removeClass('inactive'); },
                         enter: function (t) { $this.removeClass('inactive'); },
-
                         // Uncomment the line below to "rewind" when this wrapper scrolls out of view.
-
                         //leave:	function(t) { $this.addClass('inactive'); },
-
                     });
-
                 };
 
                 off = function () {
@@ -284,15 +269,11 @@ export class Scrollex extends Component {
 
                 breakpoints.on('<=medium', off);
                 breakpoints.on('>medium', on);
-
             });
 
         // Banner.
         var $banner = $('#banner');
-
-        $banner
-            ._parallax();
-
+        $banner._parallax();
     }
 
     loadChart = () => {
@@ -657,198 +638,62 @@ export class Scrollex extends Component {
 
     }
 
-    renderTrackRecord = () => {
-        return (
-            <div>
-                <div style={{ overflowX: 'auto' }}>
-                    <table id="flips_table" className="table">
-                        <thead>
-                            <tr>
-                                <th>Name ↑↓</th>
-                                <th>Quantity ↑↓</th>
-                                <th>Buy Price (per item)</th>
-                                <th>Buy Date</th>
-                                <th>Sell Price (per item)</th>
-                                <th>Sell Date</th>
-                                <th>Time Held ↑↓</th>
-                                <th>Fees</th>
-                                <th>Gross Gain / Loss ↑↓</th>
-                                <th>Net Gain / Loss ↑↓</th>
-                                <th>Return on Investment (%) ↑↓</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Yeezy 350 v2 Glow</td>
-                                <td>4</td>
-                                <td>$470</td>
-                                <td>5/25/19</td>
-                                <td>$650</td>
-                                <td>7/14/19</td>
-                                <td>02 months</td>
-                                <td>$208</td>
-                                <td><font color="#11d128">$720</font></td>
-                                <td><font color="#11d128">$512</font></td>
-                                <td><font color="#11d128">27%</font></td>
-                            </tr>
-                            <tr>
-                                <td>Travis Scott Air Jordan 4</td>
-                                <td>5</td>
-                                <td>$330</td>
-                                <td>12/13/18</td>
-                                <td>$528</td>
-                                <td>7/14/19</td>
-                                <td>07 months</td>
-                                <td>$211</td>
-                                <td><font color="#11d128">$990</font></td>
-                                <td><font color="#11d128">$779</font></td>
-                                <td><font color="#11d128">47%</font></td>
-                            </tr>
-                            <tr>
-                                <td>Yeezy 350 v2 Cream</td>
-                                <td>3</td>
-                                <td>$235</td>
-                                <td>1/22/19</td>
-                                <td>$360</td>
-                                <td>7/14/19</td>
-                                <td>06 months</td>
-                                <td>$86</td>
-                                <td><font color="#11d128">$375</font></td>
-                                <td><font color="#11d128">$289</font></td>
-                                <td><font color="#11d128">41%</font></td>
-                            </tr>
-                            <tr>
-                                <td>Air Jordan 1 Bred Toe</td>
-                                <td>3</td>
-                                <td>$277</td>
-                                <td>2/20/18</td>
-                                <td>$488</td>
-                                <td>2/9/19</td>
-                                <td>12 months</td>
-                                <td>$117</td>
-                                <td><font color="#11d128">$633</font></td>
-                                <td><font color="#11d128">$516</font></td>
-                                <td><font color="#11d128">62%</font></td>
-                            </tr>
-                            <tr>
-                                <td>Union LA Air Jordan 1</td>
-                                <td>2</td>
-                                <td>$573</td>
-                                <td>12/21/18</td>
-                                <td>$1,227</td>
-                                <td>3/15/19</td>
-                                <td>03 months</td>
-                                <td>$196</td>
-                                <td><font color="#11d128">$1,308</font></td>
-                                <td><font color="#11d128">$1,112</font></td>
-                                <td><font color="#11d128">97%</font></td>
-                            </tr>
-                            <tr>
-                                <td>Air Jordan 1 Not For Resale</td>
-                                <td>2</td>
-                                <td>$780</td>
-                                <td>2/16/19</td>
-                                <td>$677</td>
-                                <td>3/8/19</td>
-                                <td>01 months</td>
-                                <td>$108</td>
-                                <td><font color="#d13b3c">-$206</font></td>
-                                <td><font color="#d13b3c">-$314</font></td>
-                                <td><font color="#d13b3c">-20%</font></td>
-                            </tr>
-                            <tr>
-                                <td>Off-White Air Jordan 1 Chicago</td>
-                                <td>1</td>
-                                <td>$1,184</td>
-                                <td>12/12/18</td>
-                                <td>$3,400</td>
-                                <td>6/4/19</td>
-                                <td>06 months</td>
-                                <td>$272</td>
-                                <td><font color="#11d128">$2,216</font></td>
-                                <td><font color="#11d128">$1,944</font></td>
-                                <td><font color="#11d128">164%</font></td>
-                            </tr>
-                            <tr>
-                                <td>Off-White Nike Presto OG</td>
-                                <td>1</td>
-                                <td>$1,470</td>
-                                <td>3/2/18</td>
-                                <td>$2,200</td>
-                                <td>4/1/19</td>
-                                <td>13 months</td>
-                                <td>$176</td>
-                                <td><font color="#11d128">$730</font></td>
-                                <td><font color="#11d128">$554</font></td>
-                                <td><font color="#11d128">38%</font></td>
-                            </tr>
-                            <tr>
-                                <td>Air Jordan 5 Trophy Room</td>
-                                <td>2</td>
-                                <td>$600</td>
-                                <td>5/18/19</td>
-                                <td>$1,200</td>
-                                <td>7/14/19</td>
-                                <td>02 months</td>
-                                <td>$192</td>
-                                <td><font color="#11d128">$1,200</font></td>
-                                <td><font color="#11d128">$1,008</font></td>
-                                <td><font color="#11d128">84%</font></td>
-                            </tr>
-                            <tr>
-                                <td>Serena Williams Off White Nike Air Max 97</td>
-                                <td>1</td>
-                                <td>$900</td>
-                                <td>1/18/19</td>
-                                <td>$1,150</td>
-                                <td>6/14/19</td>
-                                <td>05 months</td>
-                                <td>$92</td>
-                                <td><font color="#11d128">$250</font></td>
-                                <td><font color="#11d128">$158</font></td>
-                                <td><font color="#11d128">18%</font></td>
-                            </tr>
-                            <tr>
-                                <td>Raptor OVO Air Jordan 4</td>
-                                <td>1</td>
-                                <td>$375</td>
-                                <td>6/13/19</td>
-                                <td>$225</td>
-                                <td>7/14/19</td>
-                                <td>02 months</td>
-                                <td>$18</td>
-                                <td><font color="#d13b3c">-$150</font></td>
-                                <td><font color="#d13b3c">-$168</font></td>
-                                <td><font color="#d13b3c">-45%</font></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <br />
-                Above is the <b>complete portfolio</b> of investments we have made as a collective<sup>4</sup>.
-                The more confident we are in a certain streetwear item, the more we invest. Whether it be one month or one year investments, the majority of the items that we have held have proven to be profitable, with ROI’s ranging from 18% to 164% after transaction fees. In the bigger picture, the positives outweigh the negatives, resulting in a consistent net profit in our diverse portfolio.
-                <br />
-                <br />
-                Note that we calculated our final numbers by including an average 8% fee that transactions incur. Even with fees, however, streetwear can still turn extremely large profit margins.
-                <br />
-                <br />
-                <div className="asterisk"><sup>4</sup>Prior investments made by team members independently are uncharted.</div>
-                <br />
-                <br />
-            </div>
-        )
+  
+
+    onClickAnchor = (value) =>{
+        this.setState({
+            anchor : value,
+        })
+        console.log(value);
     }
+
+    ifHasAnchorJustScorll = () => {
+        // let anchor = this.getURLStuff("anchor");
+        let anchor = this.props.location.state ? this.props.location.state.data : this.state.anchor;
+
+        // let anchor = this.state.anchor;
+        console.log("anchor ", anchor);
+        // 对应id的话, 滚动到相应位置
+        if (!!anchor) {
+          let anchorElement = document.getElementById(anchor);
+          if (anchorElement) {
+            // window.scrollTo(0, anchorElement.offsetTop - window.innerHeight / 2);
+            window.scrollTo(0, anchorElement.offsetTop-40);
+          }
+        }
+        // 没有的话，滚动到头部
+        else {
+          document.body.scrollTop = document.documentElement.scrollTop = 10;
+        }
+      }
+
+      getURLStuff(stuff) {
+        let url = window.location.hash;
+        let query = url.split("?").length > 1 ? url.split("?")[1] : "";
+        let param = !!query ? query.split("&") : [];
+        let resultSet = {};
+        for (let i = 0; i < param.length; i++) {
+          let params = param[i].split("=");
+          if (params.length > 1) {
+            resultSet[params[0]] = params[1];
+          }
+        }
+        let result = resultSet[stuff] || "";
+        console.log("result ", result);
+        return decodeURI(result);
+      }
 
 
     render() {
         const { name, email } = this.state;
+        this.ifHasAnchorJustScorll();   
         return (
             <div id="page-wrapper">
                 {/* <!-- Header --> */}
                 <header id="header">
                     <h1 id="logo">
                         <a href="#" >
-                            <img src={letter_logo} alt="" style={{ float: 'right', height: '40px', margin: '10px 0px' }} />
+                            <img src={letter_logo} alt="" id="logoImg" />
                         </a>
                     </h1>
                     <nav id="nav">
@@ -856,10 +701,10 @@ export class Scrollex extends Component {
                             <li>
                                 <a href="#">About</a>
                                 <ul>
-                                    <li><a href="#story" className="scrolly">Our Story</a></li>
-                                    <li><a href="#service" className="scrolly">Our Service</a></li>
-                                    <li><a href="#industry" className="scrolly">The Industry</a></li>
-                                    <li><a href="#why" className="scrolly">Why Us</a></li>
+                                    <li><a href="#story" id="storyMenu" className="scrolly">Our Story</a></li>
+                                    <li><a href="#service" id="serviceMenu" className="scrolly">Our Service</a></li>
+                                    <li><a href="#industry" id="industryMenu" className="scrolly">The Industry</a></li>
+                                    <li><a href="#why" id="whyMenu" className="scrolly">Why Us</a></li>
                                 </ul>
                             </li>
                             <li><a href="#form" className="scrolly">Contact</a></li>

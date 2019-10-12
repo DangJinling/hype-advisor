@@ -16,18 +16,34 @@ import $ from 'jquery';
 			b = [];
 
 		// eslint-disable-next-line no-undef
-		$a.each(function () {
+		// $a.each(function () {
 
+		// 	var $this = $(this),
+		// 		indent = Math.max(0, $this.parents('li').length - 1),
+		// 		href = $this.attr('href'),
+		// 		target = $this.attr('target');
+		// 	b.push(
+		// 		'<a ' +
+		// 		'class="link depth-' + indent + '"' +
+		// 		((typeof target !== 'undefined' && target != '') ? ' target="' + target + '"' : '') +
+		// 		((typeof href !== 'undefined' && href != '') ? ' href="' + href + '"' : '') +
+		// 		'>' +
+		// 		'<span class="indent-' + indent + '"></span>' +
+		// 		$this.text() +
+		// 		'</a>'
+		// 	);
+		// });
+
+		$a.each(function () {
 			var $this = $(this),
 				indent = Math.max(0, $this.parents('li').length - 1),
 				href = $this.attr('href'),
 				target = $this.attr('target');
-
 			b.push(
 				'<a ' +
 				'class="link depth-' + indent + '"' +
 				((typeof target !== 'undefined' && target != '') ? ' target="' + target + '"' : '') +
-				((typeof href !== 'undefined' && href != '') ? ' href="' + href + '"' : '') +
+				((typeof href !== 'undefined' && href != '') ? ' id="' + href.substring(1) + 'Menu"' : '') +
 				'>' +
 				'<span class="indent-' + indent + '"></span>' +
 				$this.text() +
@@ -46,7 +62,7 @@ import $ from 'jquery';
 	 * @return {jQuery} jQuery object.
 	 */
 	$.fn.panel = function (userConfig) {
-
+		var step = 0;
 		// No elements?
 		if (this.length === 0)
 			return $this;
@@ -282,8 +298,14 @@ import $ from 'jquery';
 
 			event.preventDefault();
 			event.stopPropagation();
-
-			config.target.toggleClass(config.visibleClass);
+			
+			if(step < 1){
+				config.target.toggleClass(config.visibleClass);
+				step ++;
+			}else{
+				step = 0;
+			}
+			
 
 		});
 

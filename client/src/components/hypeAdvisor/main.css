@@ -4110,3 +4110,119 @@ input::-moz-focus-inner {
 					}
 
 	}
+
+	@media screen and (max-width: 1680px) {
+		#logoImg{
+			float: right;
+			height: 40px;
+    		margin: 10px 0px;
+		}
+		#agreementContainer{
+			width: 50%;
+			margin: 0 auto;
+			padding-top: 60px; 
+		}
+		#canvasContainer{
+			width: 612px
+		}
+		#canvasContainer > div{
+			overflow-x: hidden;
+			overflow-y: auto;
+			height: 450px;
+		}
+		
+	}
+
+
+	@media screen and (max-width: 1280px) {
+
+		#logoImg{
+			float: right;
+			height: 40px;
+    		margin: 10px 0px;
+		}
+		#agreementContainer{
+			width: 50%;
+			margin: 0 auto;
+			padding-top: 60px; 
+		}
+		#canvasContainer{
+			width: 612px
+		}
+		#canvasContainer > div{
+			overflow-x: hidden;
+			overflow-y: auto;
+			height: 450px;
+		}
+
+	}
+
+	@media screen and (max-width: 980px) {
+
+		#logoImg{
+			float: right;
+			height: 40px;
+    		margin: 10px 0px;
+		}
+		#agreementContainer{
+			width: 50%;
+			margin: 0 auto;
+			padding-top: 60px; 
+		}
+		#canvasContainer{
+			width: 612px
+		}
+		#canvasContainer > div{
+			overflow-x: hidden;
+			overflow-y: auto;
+			height: 450px;
+		}
+
+	}
+
+	@media screen and (max-width: 736px) { 
+		#logoImg{
+			float: right;
+			height: 40px;
+    		margin: 10px 0px;
+		}
+		#agreementContainer{
+			width: 50%;
+			margin: 0 auto;
+			padding-top: 60px; 
+		}
+		#canvasContainer{
+			width: 612px
+		}
+		#canvasContainer > div{
+			overflow-x: hidden;
+			overflow-y: auto;
+			height: 450px;
+		}
+	}
+
+
+	@media screen and (max-width: 480px) {
+		#logoImg {
+			float: right;
+			height: 30px;
+    		margin: 10px 10px;
+		}
+
+		#LoginSubmit, #registerSubmit, #agreementSubmit{
+			padding: 0 2.25em;
+		}
+		#agreementContainer{
+			width: 100%;
+			margin: 0 auto;
+			padding-top: 0; 
+		}
+		#canvasContainer{
+			width: 400px
+		}
+		#canvasContainer > div{
+			overflow-x: auto;
+			overflow-y: auto;
+			height: 450px;
+		}
+	}
