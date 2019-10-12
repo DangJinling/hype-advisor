@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import PDF from 'react-pdf-js';
 import { register } from '../../actions/auth';
 import pdfFile from '../../asset/Terms and Conditions.pdf';
+import Alert from "../layout/alert/alert.jsx";
 import './Agreement.css';
 import letter_logo from './images/letter_logo.png';
 
@@ -236,15 +237,20 @@ export class Agreement extends Component {
             const dataObj = JSON.parse(data);
             if (dataObj.first_name && dataObj.last_name && dataObj.password && dataObj.email && dataObj.amount) {
                 const response = register(data);
+                const that = this;
                 response.then(result => {
                     if (result.statusText === 'OK') {
                         // this.setState({ registerSuccess: true });
                         // this.showModal();
-                        alert('Thank for singing up. Please check your email to active the account.');
-                        this.setState({
-                            visible: false,
-                            RedirectStatus: true,
-                            RedirectPath: "#"
+                        Alert.open({
+                            alertTip: "Thank for singing up. Please check your email to active the account.",
+                            closeAlert: function () {
+                                that.setState({
+                                    visible: false,
+                                    RedirectStatus: true,
+                                    RedirectPath: "#"
+                                });
+                            }
                         });
                     }
                 })
