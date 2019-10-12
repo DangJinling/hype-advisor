@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { register } from '../../actions/auth';
 import { Redirect } from 'react-router-dom';
 import letter_logo from './images/letter_logo.png';
+import Alert from "../layout/alert/alert.jsx";
 // import 'bootstrap/dist/css/bootstrap.css';
 // import 'bootstrap/dist/css/bootstrap-theme.css';
 
@@ -22,7 +23,13 @@ export class Register extends Component {
         const { first_name, last_name, email, password, password2, amount } = this.state;
         if (password !== password2) {
             // this.props.createMessage({ passwordNotMatch: 'Password do not match.' })
-            alert('Password do not match.');
+            // alert('Password do not match.');
+            Alert.open({
+                alertTip: "Password do not match.",
+                closeAlert: function () {
+                    console.log("clsose alert...");
+                }
+            });
         } else {
             if (email && amount !== '' && first_name && last_name) {
                 const newUser = {
@@ -159,9 +166,9 @@ export class Register extends Component {
                         </form>
                     </div>
                 </div>
-                <div style={{position:'absolute',bottom:0, marginLeft: -350, left:'50%'}}>
-                    <footer style={{textAlign:'center', width:700}}>
-                        <ul className="icons" style={{marginBottom:20}}>
+                <div style={{ position: 'absolute', bottom: 0, marginLeft: -350, left: '50%' }}>
+                    <footer style={{ textAlign: 'center', width: 700 }}>
+                        <ul className="icons" style={{ marginBottom: 20 }}>
                             <li><a href="http://instagram.com/thehypeadvisor" className="icon alt fa-instagram"><span className="label">Instagram</span></a></li>
                             <li><a href="mailto:team@thehypeadvisor.com" className="icon alt fa-envelope"><span className="label">Email</span></a></li>
                         </ul>
