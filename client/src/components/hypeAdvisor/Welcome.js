@@ -138,45 +138,58 @@ export class Welcome extends Component {
     render() {
         const { user, currentTab } = this.state;
         return (
-            <div>
+            <div id="page-wrapper">
+                {/* <!-- Header --> */}
                 <header id="header">
                     <h1 id="logo">
                         <a href="#" >
-                            <img src={letter_logo} alt="" style={{ float: 'right', height: '40px', margin: '10px 0px' }} />
+                            <img src={letter_logo} alt="" id="logoImg" />
                         </a>
                     </h1>
                     <nav id="nav">
                         <ul>
+                            <li>
+                                <a href="#">About</a>
+                                <ul>
+                                    <li><a href="#story" className="scrolly">Our Story</a></li>
+                                    <li><a href="#service" className="scrolly">Our Service</a></li>
+                                    <li><a href="#industry" className="scrolly">The Industry</a></li>
+                                    <li><a href="#why" className="scrolly">Why Us</a></li>
+                                </ul>
+                            </li>
                             <li><Link to='/' className="button primary">Logout</Link></li>
                         </ul>
                     </nav>
                 </header>
-                {
-                    user.is_superuser ? (
-                        <div>
-                            <section id="industry" className="wrapper style1 special fade" style={{ paddingTop: 60 }}>
-                                <div className="container">
-                                    <br />
-                                    <a className="button" onClick={this.clickTab} name='Subscribed'>Subscribed User</a>
-                                    <a className="button" onClick={this.clickTab} name="Registered">Registered User</a>
-                                    <div style={{ paddingTop: 20 }}>
-                                        {
-                                            "Subscribed" === currentTab ? (
-                                                this.renderSubscribed()
-                                            ) : (
-                                                    this.renderRegistered()
-                                                )
-                                        }
+                {/* < div className='col-md-6 m-auto' style={{ width: '50%', margin: '0 auto', paddingTop: 60 }}> */}
+                <div className='card card-body mt-5'>
+                    {
+                        user.is_superuser ? (
+                            <div>
+                                <section id="industry" className="wrapper style1 special fade" style={{ paddingTop: 60 }}>
+                                    <div className="container">
+                                        <br />
+                                        <a className="button" onClick={this.clickTab} name='Subscribed'>Subscribed User</a>
+                                        <a className="button" onClick={this.clickTab} name="Registered">Registered User</a>
+                                        <div style={{ paddingTop: 20 }}>
+                                            {
+                                                "Subscribed" === currentTab ? (
+                                                    this.renderSubscribed()
+                                                ) : (
+                                                        this.renderRegistered()
+                                                    )
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-                            </section>
-                        </div>
-                    )
-                        :
-                        this.renderWelcome()
-                }
-
-                <footer style={{ textAlign: 'center', width: 700 }}>
+                                </section>
+                            </div>
+                        )
+                            :
+                            this.renderWelcome()
+                    }
+                </div>
+                {/* </div > */}
+                <footer style={{ textAlign: 'center' }}>
                     <ul className="icons" style={{ marginBottom: 20 }}>
                         <li><a href="http://instagram.com/thehypeadvisor" className="icon alt fa-instagram"><span className="label">Instagram</span></a></li>
                         <li><a href="mailto:team@thehypeadvisor.com" className="icon alt fa-envelope"><span className="label">Email</span></a></li>
@@ -186,7 +199,6 @@ export class Welcome extends Component {
                     </ul>
                 </footer>
             </div>
-
         )
     }
 }
