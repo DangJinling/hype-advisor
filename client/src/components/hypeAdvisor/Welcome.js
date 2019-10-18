@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getRegisterUser, getSubscribedUser } from '../../actions/auth';
 import letter_logo from './images/letter_logo.png';
+import RegisteredUsers from './RegisteredUsers';
+import SubscribedUsers from './SubscribedUsers';
 
 
 export class Welcome extends Component {
@@ -17,7 +18,6 @@ export class Welcome extends Component {
     }
 
     componentWillMount() {
-        this.getSubscribedUserList();
     }
 
 
@@ -25,96 +25,15 @@ export class Welcome extends Component {
     clickTab = (e) => {
         this.setState({ currentTab: e.target.name }, () => {
         });
-        e.target.name === "Subscribed" ? this.getSubscribedUserList() : this.getRegisterUserList();
     }
 
-    getRegisterUserList = () => {
-        const response = getRegisterUser();
-        response.then(result => {
-            if (result.status === 200 && result.statusText === 'OK') {
-                this.setState({ registerUserList: result.data });
-            }
-        })
-    }
 
-    getSubscribedUserList = () => {
-        const response = getSubscribedUser();
-        response.then(result => {
-            if (result.status === 200 && result.statusText === 'OK') {
-                this.setState({ subscribedUserList: result.data });
-            }
-        })
-    }
 
     transformDateStr = (dateStr) => {
         const d = new Date(dateStr);
         const str = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
         return str;
     }
-
-
-
-    renderSubscribed = () => {
-        const { subscribedUserList } = this.state;
-        return (
-            <div style={{ overflowX: 'auto', padding: 20 }}>
-                <table id="flips_table" className="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Joined date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {subscribedUserList.map(user => (
-                            <tr key={user.id}>
-                                <td>{user.name}</td>
-                                <td>{user.email}</td>
-                                <td>{this.transformDateStr(user.created_at)}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        )
-    }
-
-
-    renderRegistered = () => {
-        const { registerUserList } = this.state;
-
-
-        return (
-            <div style={{ overflowX: 'auto', padding: 20 }}>
-                <table id="flips_table" className="table">
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>First name</th>
-                            <th>Last name</th>
-                            <th>Amount</th>
-                            <th>Modified date</th>
-                            {/* <th>Is active</th> */}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {registerUserList.map(user => (
-                            <tr key={user.id}>
-                                <td>{user.email}</td>
-                                <td>{user.first_name}</td>
-                                <td>{user.last_name}</td>
-                                <td>{user.amount}</td>
-                                <td>{this.transformDateStr(user.date_joined)}</td>
-                                {/* <td>{user.is_active ? 'True' : 'False'}</td> */}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        )
-    }
-
 
     renderWelcome = () => {
         const { user } = this.state;
@@ -132,8 +51,6 @@ export class Welcome extends Component {
             </div>
         )
     }
-
-
 
     render() {
         const { user, currentTab } = this.state;
@@ -174,9 +91,9 @@ export class Welcome extends Component {
                                         <div style={{ paddingTop: 20 }}>
                                             {
                                                 "Subscribed" === currentTab ? (
-                                                    this.renderSubscribed()
+                                                    < RegisteredUsers />
                                                 ) : (
-                                                        this.renderRegistered()
+                                                        <SubscribedUsers />
                                                     )
                                             }
                                         </div>

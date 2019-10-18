@@ -1,7 +1,7 @@
 import { ADD_MEMBER } from '../actions/types.js';
 
 const initialState = {
-    members: []
+    subscribedUsers: []
 }
 
 export default function (state = initialState, action) {
@@ -9,7 +9,7 @@ export default function (state = initialState, action) {
         case ADD_MEMBER:
             return {
                 ...state,
-                members: [...state.members, action.payload]
+                subscribedUsers: [...state.subscribedUsers, action.payload]
             }
         default:
             return state;

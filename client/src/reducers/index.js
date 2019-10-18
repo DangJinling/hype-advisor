@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import members from './members';
+import subscribedUsers from './subscribedUsers';
 
 export default combineReducers({
-    members
+    subscribedUsers
 });

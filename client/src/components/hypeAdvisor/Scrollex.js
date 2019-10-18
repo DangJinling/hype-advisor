@@ -21,7 +21,7 @@ import './font-awesome.min.css';
 import './noscript.css';
 // import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
-import { addMember } from '../../actions/members';
+import { addSubscribedUser } from '../../actions/subscribedUsers';
 import { trackRecord, marketComparison } from './js/buttons.js';
 import { Link, Redirect } from 'react-router-dom';
 // import jquery from '../hypeAdvisor/js/jquery.min.js';
@@ -533,7 +533,7 @@ export class Scrollex extends Component {
         e.preventDefault();
         const { name, email } = this.state;
         const member = { name, email };
-        const res = addMember(member);
+        const res = addSubscribedUser(member);
         console.log(res);
     }
 
