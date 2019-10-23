@@ -27,14 +27,6 @@ export class Welcome extends Component {
         });
     }
 
-
-
-    transformDateStr = (dateStr) => {
-        const d = new Date(dateStr);
-        const str = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
-        return str;
-    }
-
     renderWelcome = () => {
         const { user } = this.state;
         return (
@@ -91,9 +83,9 @@ export class Welcome extends Component {
                                         <div style={{ paddingTop: 20 }}>
                                             {
                                                 "Subscribed" === currentTab ? (
-                                                    < RegisteredUsers />
+                                                    <SubscribedUsers />
                                                 ) : (
-                                                        <SubscribedUsers />
+                                                        < RegisteredUsers />
                                                     )
                                             }
                                         </div>

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { getRegisterUser } from '../../actions/auth';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getRegisterUser, deleteUser } from '../../actions/auth';
 
-export default class RegisteredUsers extends Component {
+
+export class RegisteredUsers extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -9,17 +12,28 @@ export default class RegisteredUsers extends Component {
         }
     }
 
+    static propTypes = {
+        getRegisterUser: PropTypes.func.isRequired,
+        deleteUser: PropTypes.func.isRequired,
+    }
+
     componentWillMount() {
         this.getRegisterUserList();
     }
 
     getRegisterUserList = () => {
-        const response = getRegisterUser();
+        const response = this.props.getRegisterUser();
         response.then(result => {
             if (result.status === 200 && result.statusText === 'OK') {
                 this.setState({ registerUserList: result.data });
             }
         })
+    }
+
+    transformDateStr = (dateStr) => {
+        const d = new Date(dateStr);
+        const str = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+        return str;
     }
 
     render() {
@@ -47,6 +61,11 @@ export default class RegisteredUsers extends Component {
                                 <td>{user.amount}</td>
                                 <td>{this.transformDateStr(user.date_joined)}</td>
                                 {/* <td>{user.is_active ? 'True' : 'False'}</td> */}
+                                <td>
+                                    <button className="btn btn-danger btn-sm" onClick={this.props.deleteUser.bind(this, user.id)}>
+                                        Delete
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -55,3 +74,9 @@ export default class RegisteredUsers extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    // leads: state.leads.leads
+})
+
+export default connect(mapStateToProps, { getRegisterUser, deleteUser })(RegisteredUsers);

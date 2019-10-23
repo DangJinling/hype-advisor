@@ -3,10 +3,9 @@ import React, { Component } from 'react';
 import letter_logo from './images/letter_logo.png';
 import new_logo_no_border from './images/new_logo_no_border.png';
 import service from './images/service.png';
-import './main.css';
+import './main.module.css';
 import './chart.css';
 import $ from 'jquery';
-// import './js/jquery.min.js';
 import './js/jquery.scrolly.min.js';
 import './js/jquery.dropotron.min.js';
 import './js/jquery.scrollex.min.js';
@@ -14,23 +13,17 @@ import browser from './js/browser.min.js';
 import breakpoints from './js/breakpoints.min.js';
 import d3 from './js/d3.min.js';
 import './js/util.js';
-// import './js/buttons.js';
-// import './js/chart.js';
-// import './js/main.js';
 import './font-awesome.min.css';
 import './noscript.css';
-// import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
 import { addSubscribedUser } from '../../actions/subscribedUsers';
 import { trackRecord, marketComparison } from './js/buttons.js';
 import { Link, Redirect } from 'react-router-dom';
-// import jquery from '../hypeAdvisor/js/jquery.min.js';
-// import sortable from '../hypeAdvisor/js/jquery.sortable.min.js';
 import { industry_chart_scale } from '../hypeAdvisor/js/industry_chart';
 import { stock1_scale } from '../hypeAdvisor/js/stock1';
 import { stock2_scale } from '../hypeAdvisor/js/stock2';
 import { stock3_scale } from '../hypeAdvisor/js/stock3';
 import { stock4_scale } from '../hypeAdvisor/js/stock4';
+import './js/jquery.dataTables.js'
 
 import { nothing, text1, text2 } from './js/Button';
 
@@ -53,7 +46,7 @@ export class Scrollex extends Component {
 
     loadPage = () => {
         var that = this;
-       
+
         var $window = $(window),
             $body = $('body');
 
@@ -131,35 +124,35 @@ export class Scrollex extends Component {
             '</nav>' +
             '</div>'
         ).appendTo($body)
-        .panel({
-            delay: 500,
-            hideOnClick: true,
-            hideOnSwipe: true,
-            resetScroll: true,
-            resetForms: true,
-            side: 'left',
-            target: $body,
-            visibleClass: 'navPanel-visible'
-        });
+            .panel({
+                delay: 500,
+                hideOnClick: true,
+                hideOnSwipe: true,
+                resetScroll: true,
+                resetForms: true,
+                side: 'left',
+                target: $body,
+                visibleClass: 'navPanel-visible'
+            });
 
-        $("#navPanel").find('a').each(function(index){
+        $("#navPanel").find('a').each(function (index) {
             var $this = $(this);
-            $(this).on('click',function(){
+            $(this).on('click', function () {
                 var id = $this.attr("id");
                 var menu = "#";
-                menu = id.substring(0,id.length-4);
-                if(id.indexOf("/") >= 0 ){
+                menu = id.substring(0, id.length - 4);
+                if (id.indexOf("/") >= 0) {
                     that.props.history.push({ pathname: menu, state: { data: "menu" } });
                     $("#titleBar").empty();
                     $("#titleBar").remove();
                     $("#navPanel").remove();
-                }else if(id.indexOf("Menu") > 0 ){
+                } else if (id.indexOf("Menu") > 0) {
                     that.props.history.push({ pathname: '/', state: { data: "menu" } });
                     that.onClickAnchor(menu);
                 }
                 $body.removeClass("navPanel-visible");
             })
-          })
+        })
 
         // Parallax.
         // Disabled on IE (choppy scrolling) and mobile platforms (poor performance).
@@ -168,10 +161,10 @@ export class Scrollex extends Component {
             $.fn._parallax = function () {
                 return $(this);
             };
-        }else {
+        } else {
             $.fn._parallax = function () {
                 $(this).each(function () {
-                    var $this = $(this),on, off;
+                    var $this = $(this), on, off;
                     on = function () {
                         $this.css('background-position', 'center 0px');
                         $window.on('scroll._parallax', function () {
@@ -200,76 +193,76 @@ export class Scrollex extends Component {
         // Spotlights.
         var $spotlights = $('.spotlight');
         $spotlights._parallax().each(function () {
-                var $this = $(this),on, off;
-                on = function () {
-                    var top, bottom, mode;
-                    // Use main <img>'s src as this spotlight's background.
-                    // $this.css('background-image', 'url("' + $this.find('.image.main > img').attr('src') + '")');
-                    // Side-specific scrollex tweaks.
-                    if ($this.hasClass('top')) {
-                        mode = 'top';
-                        top = '-20%';
-                        bottom = 0;
-                    }
-                    else if ($this.hasClass('bottom')) {
-                        mode = 'bottom-only';
-                        top = 0;
-                        bottom = '20%';
-                    }
-                    else {
-                        mode = 'middle';
-                        top = 0;
-                        bottom = 0;
-                    }
+            var $this = $(this), on, off;
+            on = function () {
+                var top, bottom, mode;
+                // Use main <img>'s src as this spotlight's background.
+                // $this.css('background-image', 'url("' + $this.find('.image.main > img').attr('src') + '")');
+                // Side-specific scrollex tweaks.
+                if ($this.hasClass('top')) {
+                    mode = 'top';
+                    top = '-20%';
+                    bottom = 0;
+                }
+                else if ($this.hasClass('bottom')) {
+                    mode = 'bottom-only';
+                    top = 0;
+                    bottom = '20%';
+                }
+                else {
+                    mode = 'middle';
+                    top = 0;
+                    bottom = 0;
+                }
 
-                    // Add scrollex.
-                    $this.scrollex({
-                        mode: mode,
-                        top: top,
-                        bottom: bottom,
-                        initialize: function (t) { $this.addClass('inactive'); },
-                        terminate: function (t) { $this.removeClass('inactive'); },
-                        enter: function (t) { $this.removeClass('inactive'); },
-                        // Uncomment the line below to "rewind" when this spotlight scrolls out of view.
-                        //leave:	function(t) { $this.addClass('inactive'); },
-                    });
-                };
+                // Add scrollex.
+                $this.scrollex({
+                    mode: mode,
+                    top: top,
+                    bottom: bottom,
+                    initialize: function (t) { $this.addClass('inactive'); },
+                    terminate: function (t) { $this.removeClass('inactive'); },
+                    enter: function (t) { $this.removeClass('inactive'); },
+                    // Uncomment the line below to "rewind" when this spotlight scrolls out of view.
+                    //leave:	function(t) { $this.addClass('inactive'); },
+                });
+            };
 
-                off = function () {
-                    // Clear spotlight's background.
-                    $this.css('background-image', '');
-                    // Remove scrollex.
-                    $this.unscrollex();
-                };
+            off = function () {
+                // Clear spotlight's background.
+                $this.css('background-image', '');
+                // Remove scrollex.
+                $this.unscrollex();
+            };
 
-                breakpoints.on('<=medium', off);
-                breakpoints.on('>medium', on);
+            breakpoints.on('<=medium', off);
+            breakpoints.on('>medium', on);
 
-            });
+        });
 
         // Wrappers.
         var $wrappers = $('.wrapper');
         $wrappers.each(function () {
-                var $this = $(this),on, off;
-                on = function () {
-                    $this.scrollex({
-                        top: 250,
-                        bottom: 0,
-                        initialize: function (t) { $this.addClass('inactive'); },
-                        terminate: function (t) { $this.removeClass('inactive'); },
-                        enter: function (t) { $this.removeClass('inactive'); },
-                        // Uncomment the line below to "rewind" when this wrapper scrolls out of view.
-                        //leave:	function(t) { $this.addClass('inactive'); },
-                    });
-                };
+            var $this = $(this), on, off;
+            on = function () {
+                $this.scrollex({
+                    top: 250,
+                    bottom: 0,
+                    initialize: function (t) { $this.addClass('inactive'); },
+                    terminate: function (t) { $this.removeClass('inactive'); },
+                    enter: function (t) { $this.removeClass('inactive'); },
+                    // Uncomment the line below to "rewind" when this wrapper scrolls out of view.
+                    //leave:	function(t) { $this.addClass('inactive'); },
+                });
+            };
 
-                off = function () {
-                    $this.unscrollex();
-                };
+            off = function () {
+                $this.unscrollex();
+            };
 
-                breakpoints.on('<=medium', off);
-                breakpoints.on('>medium', on);
-            });
+            breakpoints.on('<=medium', off);
+            breakpoints.on('>medium', on);
+        });
 
         // Banner.
         var $banner = $('#banner');
@@ -623,26 +616,24 @@ export class Scrollex extends Component {
 
     reloadJSTrackRecord = () => {
         var head = document.getElementsByTagName('head')[0];
-
-        // const script = document.createElement('script');
-        // script.type = 'text/javascript';
-        // script.src = jquery;
-        // head.appendChild(script);
-
-        // const script1 = document.createElement('script');
-        // script1.type = 'text/javascript';
-        // script1.src = sortable;
-        // head.appendChild(script1);
-
-
-
+        $('#flips_table').DataTable({
+            "paging": false,
+            "info": false,
+            "searching": false,
+            "order": [[10, "desc"]],
+            columnDefs: [{
+                orderable: false,
+                targets: [2, 3, 4, 5, 7]
+            }]
+        });
+        $('.dataTables_length').addClass('bs-select');
     }
 
-  
 
-    onClickAnchor = (value) =>{
+
+    onClickAnchor = (value) => {
         this.setState({
-            anchor : value,
+            anchor: value,
         })
         console.log(value);
     }
@@ -655,38 +646,38 @@ export class Scrollex extends Component {
         console.log("anchor ", anchor);
         // 对应id的话, 滚动到相应位置
         if (!!anchor) {
-          let anchorElement = document.getElementById(anchor);
-          if (anchorElement) {
-            // window.scrollTo(0, anchorElement.offsetTop - window.innerHeight / 2);
-            window.scrollTo(0, anchorElement.offsetTop-40);
-          }
+            let anchorElement = document.getElementById(anchor);
+            if (anchorElement) {
+                // window.scrollTo(0, anchorElement.offsetTop - window.innerHeight / 2);
+                window.scrollTo(0, anchorElement.offsetTop - 40);
+            }
         }
         // 没有的话，滚动到头部
         else {
-          document.body.scrollTop = document.documentElement.scrollTop = 10;
+            document.body.scrollTop = document.documentElement.scrollTop = 10;
         }
-      }
+    }
 
-      getURLStuff(stuff) {
+    getURLStuff(stuff) {
         let url = window.location.hash;
         let query = url.split("?").length > 1 ? url.split("?")[1] : "";
         let param = !!query ? query.split("&") : [];
         let resultSet = {};
         for (let i = 0; i < param.length; i++) {
-          let params = param[i].split("=");
-          if (params.length > 1) {
-            resultSet[params[0]] = params[1];
-          }
+            let params = param[i].split("=");
+            if (params.length > 1) {
+                resultSet[params[0]] = params[1];
+            }
         }
         let result = resultSet[stuff] || "";
         console.log("result ", result);
         return decodeURI(result);
-      }
+    }
 
 
     render() {
         const { name, email } = this.state;
-        this.ifHasAnchorJustScorll();   
+        this.ifHasAnchorJustScorll();
         return (
             <div id="page-wrapper">
                 {/* <!-- Header --> */}
