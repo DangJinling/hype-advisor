@@ -91,9 +91,6 @@ class GetUsersAPI(viewsets.ModelViewSet):
     ]
     serializer_class = UserSerializer
 
-    # def get_object(self):
-    #     queryset = UserInfo.objects.all()
-    #     return queryset
 
 
 # Active account
