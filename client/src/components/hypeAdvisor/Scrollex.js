@@ -679,9 +679,7 @@ export class Scrollex extends Component {
         const { name, email } = this.state;
         this.ifHasAnchorJustScorll();
         return (
-            <div id='myTest'>
-
-            
+            <div class='mainContainer'>
                 <div id="page-wrapper">
                     {/* <!-- Header --> */}
                     <header id="header">

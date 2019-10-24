@@ -249,6 +249,7 @@ export class Register extends Component {
         }
         const { first_name, last_name, email, password, password2, amount } = this.state;
         return (
+            <div class='mainContainer'>
             <div id="page-wrapper">
                 {/* <!-- Header --> */}
                 <header id="header">
@@ -370,6 +371,7 @@ export class Register extends Component {
                         <li>&copy; The Hype Advisor.</li><li>Built by: <a href="http://m1ch43lw4ng.com">Michael Wang</a></li><li>Last Updated: June 22nd, 2019</li>
                     </ul>
                 </footer>
+            </div>
             </div>
         )
     }

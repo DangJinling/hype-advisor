@@ -231,6 +231,7 @@ export class Login extends Component {
     renderLoginPage = () => {
         const { username, password } = this.state;
         return (
+            <div class='mainContainer'>
             <div id="page-wrapper">
                 {/* <!-- Header --> */}
                 <header id="header">
@@ -301,6 +302,7 @@ export class Login extends Component {
                         </ul>
                     </footer>
                 {/* </div> */}
+            </div>
             </div>
         )
     }
