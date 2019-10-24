@@ -616,43 +616,17 @@ export class Scrollex extends Component {
 
     reloadJSTrackRecord = () => {
         var head = document.getElementsByTagName('head')[0];
-<<<<<<< HEAD
-        // $('head').append("<script type='text/javasccript' src='./js/jquery.min.js'>Appended to Blah</script>");
-        // $('head').append("<script type='text/javasccript' src='"+sortable+"'></script>");
-
-        $('#flips_table').DataTable({
-            "paging":   false,
-            "info":     false,
-            "searching": false,
-            "order": [[10, "desc" ]],
-=======
         $('#flips_table').DataTable({
             "paging": false,
             "info": false,
             "searching": false,
             "order": [[10, "desc"]],
->>>>>>> 428dc791525bec2a558573483ae1b6fa2c90fb40
             columnDefs: [{
                 orderable: false,
                 targets: [2, 3, 4, 5, 7]
             }]
         });
         $('.dataTables_length').addClass('bs-select');
-<<<<<<< HEAD
-        // const script = document.createElement('script');
-        // script.type = 'text/javascript';
-        // script.src = jquery;
-        // head.appendChild(script);
-
-        // const script1 = document.createElement('script');
-        // script1.type = 'text/javascript';
-        // script1.src = sortable;
-        // head.appendChild(script1);
-
-
-
-=======
->>>>>>> 428dc791525bec2a558573483ae1b6fa2c90fb40
     }
 
 
