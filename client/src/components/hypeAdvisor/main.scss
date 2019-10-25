@@ -28,7 +28,7 @@ section, summary, time, mark, audio, video {
 	}
 }
 
-body {
+body, .mainContainer {
 	line-height: 1;
 }
  .mainContainer{
@@ -102,7 +102,7 @@ body {
 		-ms-transition: none !important;
 		transition: none !important;
 	}
-	body {
+	body, .mainContainer {
 		color: rgba(255, 255, 255, 0.75);
 		font-family: "avenir", sans-serif;
 		font-size: 15pt;
@@ -3607,7 +3607,7 @@ body {
 
 		/* Basic */
 
-			body {
+			body, .mainContainer {
 				font-size: 13pt;
 			}
 			 .mainContainer{
@@ -3624,7 +3624,7 @@ body {
 
 		/* Basic */
 
-			body{
+			body, .mainContainer{
 				font-size: 11.5pt;
 			}
 			 .mainContainer{
@@ -3678,7 +3678,7 @@ body {
 
 		/* Basic */
 
-			body {
+			body, .mainContainer {
 				font-size: 12pt;
 			}
 			 .mainContainer{
@@ -3784,7 +3784,7 @@ body {
 				overflow-x: hidden;
 			}
 
-			body{
+			body, .mainContainer{
 				font-size: 12pt;
 			}
 			 .mainContainer{
@@ -4084,7 +4084,7 @@ body {
 				min-width: 320px;
 			}
 
-			body {
+			body, .mainContainer {
 				font-size: 12pt;
 			}
 			 .mainContainer{
