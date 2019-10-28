@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { Table, Divider } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getRegisterUser, deleteUser } from '../../actions/auth';
+import { getInvestmentByUser } from '../../actions/investment';
+import { transformDateStr } from '../../common/util';
 
 
 export class RegisteredUsers extends Component {
@@ -9,12 +12,56 @@ export class RegisteredUsers extends Component {
         super(props)
         this.state = {
             registerUserList: [],
-        }
+            investmentList: [],
+        };
+        this.columns = [
+            {
+                title: 'Email',
+                dataIndex: 'email',
+                key: 'email',
+            },
+            {
+                title: 'First name',
+                dataIndex: 'first_name',
+                key: 'first_name',
+            },
+            {
+                title: 'Last name',
+                dataIndex: 'last_name',
+                key: 'last_name',
+            },
+            {
+                title: 'Modified date',
+                dataIndex: 'date_joined',
+                key: 'date_joined',
+                render: text => transformDateStr(text)
+            },
+        ];
+
+        this.investmentColumns = [
+            {
+                title: 'Amount',
+                dataIndex: 'amount',
+                key: 'amount',
+            },
+            {
+                title: 'Date',
+                dataIndex: 'created_at',
+                key: 'created_at',
+                render: text => transformDateStr(text)
+            },
+            {
+                title: 'Comments',
+                key: 'comments',
+                dataIndex: 'comments',
+            },
+        ];
     }
 
     static propTypes = {
         getRegisterUser: PropTypes.func.isRequired,
         deleteUser: PropTypes.func.isRequired,
+        getInvestmentByUser: PropTypes.func.isRequired,
     }
 
     componentWillMount() {
@@ -30,46 +77,28 @@ export class RegisteredUsers extends Component {
         })
     }
 
-    transformDateStr = (dateStr) => {
-        const d = new Date(dateStr);
-        const str = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
-        return str;
+    loadInvestmentByUser = (record) => {
+        const response = getInvestmentByUser(record);
+        response.then(result => {
+            if (result.status === 200 && result.statusText === 'OK') {
+                this.setState({ investmentList: result.data.investment });
+            }
+        })
     }
 
     render() {
-        const { registerUserList } = this.state;
+        const { registerUserList, investmentList } = this.state;
 
         return (
-            <div style={{ overflowX: 'auto', padding: 20 }}>
-                <table id="flips_table" className="table">
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>First name</th>
-                            <th>Last name</th>
-                            <th>Amount</th>
-                            <th>Modified date</th>
-                            {/* <th>Is active</th> */}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {registerUserList.map(user => (
-                            <tr key={user.id}>
-                                <td>{user.email}</td>
-                                <td>{user.first_name}</td>
-                                <td>{user.last_name}</td>
-                                <td>{user.amount}</td>
-                                <td>{this.transformDateStr(user.date_joined)}</td>
-                                {/* <td>{user.is_active ? 'True' : 'False'}</td> */}
-                                <td>
-                                    <button className="btn btn-danger btn-sm" onClick={this.props.deleteUser.bind(this, user.id)}>
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            <div>
+                <Table dataSource={registerUserList} columns={this.columns} rowKey='id' onRow={record => {
+                    return {
+                        onClick: () => { this.loadInvestmentByUser(record) }, // 点击行
+                    };
+                }}
+                />
+                < Divider />
+                <Table dataSource={investmentList} columns={this.investmentColumns} rowKey='id' />
             </div>
         )
     }
@@ -79,4 +108,4 @@ const mapStateToProps = state => ({
     // leads: state.leads.leads
 })
 
-export default connect(mapStateToProps, { getRegisterUser, deleteUser })(RegisteredUsers);
+export default connect(mapStateToProps, { getRegisterUser, deleteUser, getInvestmentByUser })(RegisteredUsers);

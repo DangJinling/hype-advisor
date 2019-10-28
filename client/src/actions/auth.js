@@ -2,7 +2,7 @@ import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
-const server = 'http://127.0.0.1:8000';
+const server = 'http://localhost:8000';
 
 export async function login(body) {
     let response = axios.post(`${server}/api/auth/login`, body);
@@ -29,6 +29,4 @@ export const deleteUser = (id) => () => {
     const response = axios.delete(`${server}/api/auth/${id}`);
     return response;
 }
-
-
 

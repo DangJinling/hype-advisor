@@ -1,7 +1,26 @@
 import React, { Component } from 'react';
+import { Table } from 'antd';
 import { getSubscribedUser } from '../../actions/subscribedUsers';
+import { transformDateStr } from '../../common/util';
 
-
+const columns = [
+    {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name',
+    },
+    {
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email',
+    },
+    {
+        title: 'Joined date',
+        dataIndex: 'created_at',
+        key: 'created_at',
+        render: text => transformDateStr(text)
+    },
+];
 export default class SubscribedUsers extends Component {
     constructor(props) {
         super(props)
@@ -32,26 +51,7 @@ export default class SubscribedUsers extends Component {
     render() {
         const { subscribedUserList } = this.state;
         return (
-            <div style={{ overflowX: 'auto', padding: 20 }}>
-                <table id="flips_table" className="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Joined date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {subscribedUserList.map(user => (
-                            <tr key={user.id}>
-                                <td>{user.name}</td>
-                                <td>{user.email}</td>
-                                <td>{this.transformDateStr(user.created_at)}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+            <Table dataSource={subscribedUserList} columns={columns} rowKey='id' />
         )
     }
 }

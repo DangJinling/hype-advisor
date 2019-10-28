@@ -16,7 +16,7 @@
     "jquery.scrollex": "^0.2.1",
     "jquery.scrolly": "0.0.1",
     "moment": "^2.24.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.0",
     "react": "^16.8.6",
     "react-addons-css-transition-group": "^15.6.2",
     "react-alert": "^5.5.0",
@@ -57,8 +57,7 @@
   },
   "porxy": {
     "/app": {
-      "target": "http://127.0.0.1:8000",
-      "changeOrigin": true
+      "target": "http://localhost:8000/"
     }
   },
   "devDependencies": {

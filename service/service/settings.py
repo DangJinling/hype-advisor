@@ -42,8 +42,10 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'knox',
-    'accounts',
+    #own
     'subscribed',
+    'investment',
+    'accounts'
 ]
 
 REST_FRAMEWORK = {
@@ -84,7 +86,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'service.wsgi.application'
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000', 'http://35.230.8.228:8000']
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
 
 CORS_ALLOW_METHODS = [
     'DELETE',
@@ -111,27 +113,27 @@ CORS_ALLOW_HEADERS = [
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR1, 'db.sqlite3'),
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'hypedb1',
-#         'USER': 'hype-advisor',
-#         'PASSWORD': '123456',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#         'OPTIONS': {
-#             "init_command": "SET foreign_key_checks = 0;",
-#         }
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR1, 'db.sqlite3'),
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hypedb',
+        'USER': 'hype-advisor',
+        'PASSWORD': '123456',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+            "init_command": "SET foreign_key_checks = 0;",
+        }
+    }
+}
 
-AUTH_USER_MODEL = 'accounts.UserInfo'
+# AUTH_USER_MODEL = 'accounts.UserInfo'
 
 
 # Password validation
@@ -183,18 +185,18 @@ STATICFILES_DIRS = [
 # )
 #
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp-mail.outlook.com'
-# EMAIL_PORT = 587
-# DEFAULT_FROM_EMAIL = 'ngo-skt@outlook.com'
-# EMAIL_HOST_USER = 'ngo-skt@outlook.com'
-# EMAIL_HOST_PASSWORD = '***'
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'team@thehypeadvisor.com'
-EMAIL_HOST_USER = 'team@thehypeadvisor.com'
-EMAIL_HOST_PASSWORD = '<-rK3fhg62t.gWfJ'
+DEFAULT_FROM_EMAIL = 'ngo-skt@outlook.com'
+EMAIL_HOST_USER = 'ngo-skt@outlook.com'
+EMAIL_HOST_PASSWORD = 'ngo@sktlab'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# DEFAULT_FROM_EMAIL = 'team@thehypeadvisor.com'
+# EMAIL_HOST_USER = 'team@thehypeadvisor.com'
+# EMAIL_HOST_PASSWORD = '<-rK3fhg62t.gWfJ'
