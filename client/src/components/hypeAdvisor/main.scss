@@ -76,10 +76,8 @@ body {
 	html {
 		box-sizing: border-box;
 	}
-	 .mainContainer{
-		*, *:before, *:after {
-			box-sizing: inherit;
-		}
+	*, *:before, *:after {
+		box-sizing: inherit;
 	}
 
 	/* #page-wrapper {
