@@ -22,7 +22,7 @@ export class Login extends Component {
         user: null,
     }
 
-    componentDidMount() {}
+    componentDidMount() { }
 
     onSubmit = e => {
         e.preventDefault();
@@ -32,6 +32,7 @@ export class Login extends Component {
         console.log(response);
         response.then(result => {
             if (result.statusText === 'OK') {
+                localStorage.setItem('token', result.data.token);
                 this.setState({ loginSuccess: true, user: result.data.user });
             }
         })
