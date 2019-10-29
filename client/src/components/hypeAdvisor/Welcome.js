@@ -54,14 +54,18 @@ export class Welcome extends Component {
                 //         </div>
                 //     </section>
                 // </div>
-                <Tabs defaultActiveKey="1">
-                    <TabPane tab="Subscribed User" key="1">
-                        <SubscribedUsers />
-                    </TabPane>
-                    <TabPane tab="Registered User" key="2">
-                        < RegisteredUsers />
-                    </TabPane>
-                </Tabs>
+                < div className='col-md-24 m-auto' style={{ width: '50%', margin: '0 auto', paddingTop: 60 }}>
+                    <div className='card card-body mt-5'>
+                        <Tabs defaultActiveKey="1" style={{color:'#fff'}}>
+                            <TabPane tab="Subscribed User" key="1" >
+                                <SubscribedUsers />
+                            </TabPane>
+                            <TabPane tab="Registered User" key="2">
+                                < RegisteredUsers />
+                            </TabPane>
+                        </Tabs>
+                    </div>
+                </div>
             )
                 :
                 <Investment />

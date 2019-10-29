@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { getRegisterUser, deleteUser } from '../../actions/auth';
 import { getInvestmentByUser } from '../../actions/investment';
 import { transformDateStr } from '../../common/util';
+import './ant-global.css'
 
 
 export class RegisteredUsers extends Component {
@@ -96,6 +97,9 @@ export class RegisteredUsers extends Component {
                         onClick: () => { this.loadInvestmentByUser(record) }, // 点击行
                     };
                 }}
+                    pagination = {{
+                        defaultPageSize: 2
+                    }}
                 />
                 < Divider />
                 <Table dataSource={investmentList} columns={this.investmentColumns} rowKey='id' />
