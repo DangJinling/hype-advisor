@@ -30,7 +30,10 @@ export class Welcome extends Component {
     }
 
     render() {
-        const { user, currentTab } = this.state;
+        const { currentTab } = this.state;
+        const data = this.props.location.state;
+        const { user } = data;
+
         return (
             user.is_superuser ? (
                 // <div>
