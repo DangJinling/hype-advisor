@@ -6,6 +6,7 @@ import Scrollex from './components/hypeAdvisor/Scrollex';
 import Login from './components/hypeAdvisor/Login';
 import Register from './components/hypeAdvisor/Register';
 import Agreement from './components/hypeAdvisor/Agreement';
+import Welcome from './components/hypeAdvisor/Welcome';
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import MainLayout from './components/hypeAdvisor/MainLayout';
 
@@ -25,6 +26,7 @@ export class App extends Component {
               <Route exact path='/login' component={Login} />
               <Route exact path='/register' component={Register} />
               <Route exact path='/agreement' component={Agreement} />
+              <Route exact path='/welcome' component={Welcome} />
             </Switch>
           </MainLayout>
         </Router>

@@ -33,7 +33,17 @@ export class Login extends Component {
         response.then(result => {
             if (result.statusText === 'OK') {
                 localStorage.setItem('token', result.data.token);
-                this.setState({ loginSuccess: true, user: result.data.user });
+                this.setState({ loginSuccess: true, user: result.data.user }, () => {
+                    const { loginSuccess, user } = this.state;
+                    if (loginSuccess) {
+                        const data = { user };
+                        const path = {
+                            pathname: '/welcome',
+                            state: data,
+                        };
+                        this.props.history.push(path);
+                    }
+                });
             }
         })
     }
@@ -85,11 +95,9 @@ export class Login extends Component {
 
 
     render() {
-        const { loginSuccess, user } = this.state;
+        // const { loginSuccess, user } = this.state;
         return (
-            loginSuccess ?
-                <Welcome user={user} /> :
-                this.renderLoginPage()
+            this.renderLoginPage()
         )
     }
 }
