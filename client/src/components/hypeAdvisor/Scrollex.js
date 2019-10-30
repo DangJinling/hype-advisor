@@ -38,7 +38,7 @@ export default class Scrollex extends Component {
     }
 
     componentWillMount(){
-        this.props.history.push({ pathname: '/' });
+        // this.props.history.push({ pathname: '/' });
     }
 
     componentDidMount() {

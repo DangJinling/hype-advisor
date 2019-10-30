@@ -32,7 +32,9 @@ export class Login extends Component {
         console.log(response);
         response.then(result => {
             if (result.statusText === 'OK') {
+                localStorage.setItem('username', result.data.user.username);
                 localStorage.setItem('token', result.data.token);
+                localStorage.setItem('is_superuser', result.data.user.is_superuser);
                 this.setState({ loginSuccess: true, user: result.data.user }, () => {
                     const { loginSuccess, user } = this.state;
                     if (loginSuccess) {

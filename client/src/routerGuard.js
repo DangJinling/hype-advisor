@@ -1,29 +1,44 @@
-import React, { Component } from 'react';
-import letter_logo from './images/letter_logo.png';
-import service from './images/service.png';
-import './main.scss';
-import './chart.css';
+//routerGuard.js
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
+import Loadable from 'react-loadable'
+import { connect } from 'react-redux';
+import letter_logo from './components/hypeAdvisor/images/letter_logo.png';
+import './components/hypeAdvisor/main.scss';
+import './components/hypeAdvisor/chart.css';
 import $ from 'jquery';
-import './js/jquery.scrolly.min.js';
-import './js/jquery.dropotron.min.js';
-import './js/jquery.scrollex.min.js';
-import browser from './js/browser.min.js';
-import breakpoints from './js/breakpoints.min.js';
-import d3 from './js/d3.min.js';
-import './js/util.js';
-import './font-awesome.min.css';
-import './noscript.css';
-import { addSubscribedUser } from '../../actions/subscribedUsers';
-// import { trackRecord, marketComparison } from './js/buttons.js';
-import { Link, Redirect } from 'react-router-dom';
-import './js/jquery.dataTables.js'
+import './components/hypeAdvisor/js/jquery.scrolly.min.js';
+import './components/hypeAdvisor/js/jquery.dropotron.min.js';
+import './components/hypeAdvisor/js/jquery.scrollex.min.js';
+import browser from './components/hypeAdvisor/js/browser.min.js';
+import breakpoints from './components/hypeAdvisor/js/breakpoints.min.js';
+import './components/hypeAdvisor/js/util.js';
+import './components/hypeAdvisor/font-awesome.min.css';
+import './components/hypeAdvisor/noscript.css';
+import { Link } from 'react-router-dom';
+import { Button } from 'antd';
+import './components/hypeAdvisor/js/jquery.dataTables.js';
 
-class BasicLayout extends Component {
-    constructor(props){
+const mapStateToProps = state => (state)
+const mapDispatchToProps = dispatch => ({ ...dispatch })
+
+class RouterGuard extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             anchor: "",
         }
+    }
+    componentWillMount() {
+        let { history: { replace }, location } = this.props
+        // if (authorization) replace('./login')
+        if (
+            location.pathname === '/story' || 
+            location.pathname === '/service'||
+            location.pathname === '/industry' ||
+            location.pathname === '/why' ||
+            location.pathname === '/form'
+           ) replace('./')
     }
 
     componentDidMount() {
@@ -230,19 +245,26 @@ class BasicLayout extends Component {
         $banner._parallax();
     }
 
-
-
     onClickAnchor = (value) => {
         console.log(value);
         this.setState({
             anchor: value,
         })
-       
+    }
+
+    doSignOut = () => {
+        localStorage.removeItem('username');
+        localStorage.removeItem('is_superuser');
+        this.props.history.push({ pathname: '/login' });
     }
 
     render() {
-        console.log("&&&&&&&&&&&&&&&");
-        const { children } = this.props
+        let { component, loginBtn, signBtn } = this.props
+        const LoadableComponent = Loadable({
+            loader: () => import(`./components/hypeAdvisor/${component}`),
+            loading: () => ( <div/>)
+        })
+        const username = localStorage.getItem('username');
         return (
             <div class='mainContainer'>
                 <div id="page-wrapper">
@@ -258,19 +280,20 @@ class BasicLayout extends Component {
                                 <li>
                                     <a href="#">About</a>
                                     <ul>
-                                        <li><a href="#story" token="story" id="storyMenu" className="scrolly">Our Story</a></li>
-                                        <li><a href="#service" token="service" id="serviceMenu" className="scrolly">Our Service</a></li>
-                                        <li><a href="#industry" token="industry" id="industryMenu" className="scrolly">The Industry</a></li>
-                                        <li><a href="#why" token="why" id="whyMenu" className="scrolly">Why Us</a></li>
+                                        <li><a href="#story" path="/" id="storyMenu" className="scrolly">Our Story</a></li>
+                                        <li><a href="#service" path="/" id="serviceMenu" className="scrolly">Our Service</a></li>
+                                        <li><a href="#industry" path="/" id="industryMenu" className="scrolly">The Industry</a></li>
+                                        <li><a href="#why" path="/" id="whyMenu" className="scrolly">Why Us</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#form" token="form" className="scrolly">Contact</a></li>
-                                <li><Link to='/login'>Log In</Link></li>
-                                <li><Link to='/register' className="button primary">Sign Up</Link></li>
+                                { username && loginBtn && signBtn && <li><Link to='/welcome'>UserManagement</Link></li> }
+                                <li style={{display: !loginBtn && 'none'}}>{ username ? username: <Link to='/login'>LogIn</Link>}</li>
+                                <li style={{display: !signBtn && 'none'}}>{ username ? <Button onClick={this.doSignOut} className="button primary">Sign Out</Button> : <Link to='/register' className="button primary">Sign Up</Link>}</li>
                             </ul>
                         </nav>
                     </header>
-                    {children}
+                    <LoadableComponent {...this.props} />
                 {/* <!-- Footer --> */}
                     <footer id="footer">
                         <ul className="icons">
@@ -287,4 +310,4 @@ class BasicLayout extends Component {
     }
 }
 
-export default BasicLayout
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RouterGuard))

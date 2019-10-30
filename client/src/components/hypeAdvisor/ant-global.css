@@ -29,9 +29,7 @@
     background: #161414;
     border-color: #d13c3c;
 }
-.ant-pagination-item-active a {
-    color: #d13c3c;
-}
+
 .ant-pagination-item-active:focus,
 .ant-pagination-item-active:hover {
     border-color: #d13c3c;
@@ -78,4 +76,8 @@
 
 .ant-table-body table {
     margin-bottom: 0 !important;
+}
+
+.ant-table-thead > tr > th {
+    color: #fff
 }

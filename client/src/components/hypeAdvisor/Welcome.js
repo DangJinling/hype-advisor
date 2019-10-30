@@ -31,11 +31,11 @@ export class Welcome extends Component {
 
     render() {
         const { currentTab } = this.state;
-        const data = this.props.location.state;
-        const { user } = data;
-
+        const data = this.props.location.state ? this.props.location.state : {};
+        const { user } = data ? data : null;
+        const isSuperuser = localStorage.getItem('is_superuser');
         return (
-            user.is_superuser ? (
+            (user && user.is_superuser) || isSuperuser? (
                 // <div>
                 //     <section id="industry" className="wrapper style1 special fade" style={{ paddingTop: 60 }}>
                 //         <div className="container">
