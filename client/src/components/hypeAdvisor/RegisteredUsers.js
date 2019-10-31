@@ -97,11 +97,11 @@ export class RegisteredUsers extends Component {
                         onClick: () => { this.loadInvestmentByUser(record) }, // 点击行
                     };
                 }}
-                    pagination = {{
+                    pagination={{
                         defaultPageSize: 2
                     }}
                 />
-                < Divider />
+                <Divider>Investment</Divider>
                 <Table dataSource={investmentList} columns={this.investmentColumns} rowKey='id' />
             </div>
         )

@@ -8,4 +8,5 @@ urlpatterns = [
     path('', include('accounts.urls')),
     path('', include('subscribed.urls')),
     path('', include('investment.urls')),
+    path('', include('email_config.urls'))
 ]

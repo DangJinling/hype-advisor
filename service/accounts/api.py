@@ -2,8 +2,10 @@ from django.http import HttpResponse
 from rest_framework import generics, permissions, viewsets
 from rest_framework.response import Response
 from knox.models import AuthToken
+
+from email_config.sendEmail import send_mail
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
-from django.core.mail import EmailMessage, send_mail
+# from django.core.mail import EmailMessage, send_mail
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -45,12 +47,12 @@ class RegisterAPI(generics.GenericAPIView):
             'token': token,
             'url': url
         })
-        # message = MIMEText('hello, send by Python...', 'plain', 'utf-8')
         mail_subject = 'Activate your blog account.'
-        to_email = user.email
-        # to_email = 'dangjinling_1012@126.com'
-        email = EmailMessage(mail_subject, message, to=[to_email])
-        email.send()
+        # to_email = user.email
+        to_email = 'dangjinling_1012@126.com'
+        send_mail(to_email, mail_subject, message)
+        # email = EmailMessage(mail_subject, message, to=[to_email])
+        # email.send()
         return Response({
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             "token": token

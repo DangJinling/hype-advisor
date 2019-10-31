@@ -4,6 +4,7 @@ import letter_logo from './images/letter_logo.png';
 import { Tabs } from 'antd';
 import RegisteredUsers from './RegisteredUsers';
 import SubscribedUsers from './SubscribedUsers';
+import Settings from '../UserManagement/Settings';
 import { Investment } from '../investment/Investment';
 
 const { TabPane } = Tabs;
@@ -56,12 +57,15 @@ export class Welcome extends Component {
                 // </div>
                 < div className='col-md-24 m-auto' style={{ width: '50%', margin: '0 auto', paddingTop: 60 }}>
                     <div className='card card-body mt-5'>
-                        <Tabs defaultActiveKey="1" style={{color:'#fff'}}>
+                        <Tabs defaultActiveKey="1" style={{ color: '#fff' }}>
                             <TabPane tab="Subscribed User" key="1" >
                                 <SubscribedUsers />
                             </TabPane>
                             <TabPane tab="Registered User" key="2">
                                 < RegisteredUsers />
+                            </TabPane>
+                            <TabPane tab="Settings" key="3">
+                                < Settings />
                             </TabPane>
                         </Tabs>
                     </div>

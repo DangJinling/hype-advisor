@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     #own
     'subscribed',
     'investment',
-    'accounts'
+    'accounts',
+    'email_config'
 ]
 
 REST_FRAMEWORK = {
@@ -191,7 +192,7 @@ EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'ngo-skt@outlook.com'
 EMAIL_HOST_USER = 'ngo-skt@outlook.com'
-EMAIL_HOST_PASSWORD = 'ngo@sktlab'
+EMAIL_HOST_PASSWORD = '****'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_USE_TLS = True
@@ -199,4 +200,4 @@ EMAIL_HOST_PASSWORD = 'ngo@sktlab'
 # EMAIL_PORT = 587
 # DEFAULT_FROM_EMAIL = 'team@thehypeadvisor.com'
 # EMAIL_HOST_USER = 'team@thehypeadvisor.com'
-# EMAIL_HOST_PASSWORD = '<-rK3fhg62t.gWfJ'
+# EMAIL_HOST_PASSWORD = '***'

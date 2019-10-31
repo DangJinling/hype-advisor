@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal } from 'antd';
+import { message } from 'antd';
 import { Link, Redirect } from 'react-router-dom';
 import PDF from 'react-pdf-js';
 import { register } from '../../actions/auth';
@@ -32,7 +32,7 @@ export class Agreement extends Component {
 
     loadPage = () => {
         const that = this;
-       
+
         var $window = $(window),
             $body = $('body');
 
@@ -53,7 +53,7 @@ export class Agreement extends Component {
         // Touch mode.
         if (browser.mobile)
             $body.addClass('is-touch');
-       
+
         // Dropdowns.
         $('#nav > ul').dropotron({
             alignment: 'right',
@@ -76,28 +76,28 @@ export class Agreement extends Component {
             '</nav>' +
             '</div>'
         ).appendTo($body)
-        .panel({
-            delay: 500,
-            hideOnClick: true,
-            hideOnSwipe: true,
-            resetScroll: true,
-            resetForms: true,
-            side: 'left',
-            target: $body,
-            visibleClass: 'navPanel-visible'
-        });
+            .panel({
+                delay: 500,
+                hideOnClick: true,
+                hideOnSwipe: true,
+                resetScroll: true,
+                resetForms: true,
+                side: 'left',
+                target: $body,
+                visibleClass: 'navPanel-visible'
+            });
 
-        $("#navPanel").find('a').each(function(index){
+        $("#navPanel").find('a').each(function (index) {
             var $this = $(this);
-            $(this).on('click',function(){
+            $(this).on('click', function () {
                 var id = $this.attr("id");
                 var menu = "#";
-                menu = id.substring(0,id.length-4);
+                menu = id.substring(0, id.length - 4);
                 const path = `/${menu}`;
-                if(id.indexOf("/") >= 0 ){
+                if (id.indexOf("/") >= 0) {
                     // that.setState({  RedirectStatus: true, RedirectPath: menu});
-                    that.props.history.push({ pathname: menu});
-                }else if(id.indexOf("Menu") > 0 ){
+                    that.props.history.push({ pathname: menu });
+                } else if (id.indexOf("Menu") > 0) {
                     that.props.history.push({ pathname: '/', state: { data: menu } });
                     // that.setState({  RedirectStatus: true, RedirectPath: "/"});
                 }
@@ -107,111 +107,6 @@ export class Agreement extends Component {
                 $body.removeClass("navPanel-visible");
             })
         })
-
-        // Parallax.
-        // Disabled on IE (choppy scrolling) and mobile platforms (poor performance).
-        // if (browser.name === 'ie'|| browser.mobile) {
-        //     $.fn._parallax = function () {
-        //         return $(this);
-        //     };
-        // }
-        // else {
-        //     $.fn._parallax = function () {
-        //         $(this).each(function () {
-        //             var $this = $(this),on, off;
-        //             on = function () {
-        //                 $this.css('background-position', 'center 0px');
-        //                 $window.on('scroll._parallax', function () {
-        //                         var pos = parseInt($window.scrollTop()) - parseInt($this.position().top);
-        //                         $this.css('background-position', 'center ' + (pos * -0.15) + 'px');
-        //                     });
-        //             };
-
-        //             off = function () {
-        //                 $this.css('background-position', '');
-        //                 $window.off('scroll._parallax');
-        //             };
-        //             breakpoints.on('<=medium', off);
-        //             breakpoints.on('>medium', on);
-        //         });
-        //         return $(this);
-        //     };
-        //     $window
-        //         .on('load resize', function () {
-        //             $window.trigger('scroll');
-        //         });
-        // }
-        // Spotlights.
-        // var $spotlights = $('.spotlight');
-        // $spotlights._parallax().each(function () {
-        //         var $this = $(this),on, off;
-        //         on = function () {
-        //             var top, bottom, mode;
-        //             // Use main <img>'s src as this spotlight's background.
-        //             // $this.css('background-image', 'url("' + $this.find('.image.main > img').attr('src') + '")');
-        //             // Side-specific scrollex tweaks.
-        //             if ($this.hasClass('top')) {
-        //                 mode = 'top';
-        //                 top = '-20%';
-        //                 bottom = 0;
-        //             }
-        //             else if ($this.hasClass('bottom')) {
-        //                 mode = 'bottom-only';
-        //                 top = 0;
-        //                 bottom = '20%';
-        //             }
-        //             else {
-        //                 mode = 'middle';
-        //                 top = 0;
-        //                 bottom = 0;
-        //             }
-
-        //             // Add scrollex.
-        //             $this.scrollex({
-        //                 mode: mode,
-        //                 top: top,
-        //                 bottom: bottom,
-        //                 initialize: function (t) { $this.addClass('inactive'); },
-        //                 terminate: function (t) { $this.removeClass('inactive'); },
-        //                 enter: function (t) { $this.removeClass('inactive'); },
-        //                 // Uncomment the line below to "rewind" when this spotlight scrolls out of view.
-        //                 //leave:	function(t) { $this.addClass('inactive'); },
-        //             });
-        //         };
-        //         off = function () {
-        //             // Clear spotlight's background.
-        //             $this.css('background-image', '');
-        //             // Remove scrollex.
-        //             $this.unscrollex();
-        //         };
-        //         breakpoints.on('<=medium', off);
-        //         breakpoints.on('>medium', on);
-        //     });
-        // // Wrappers.
-        // var $wrappers = $('.wrapper');
-        // $wrappers.each(function () {
-
-        //         var $this = $(this),on, off;
-        //         on = function () {
-        //             $this.scrollex({
-        //                 top: 250,
-        //                 bottom: 0,
-        //                 initialize: function (t) { $this.addClass('inactive'); },
-        //                 terminate: function (t) { $this.removeClass('inactive'); },
-        //                 enter: function (t) { $this.removeClass('inactive'); },
-        //                 // Uncomment the line below to "rewind" when this wrapper scrolls out of view.
-        //                 //leave:	function(t) { $this.addClass('inactive'); },
-        //             });
-        //         };
-        //         off = function () {
-        //             $this.unscrollex();
-        //         };
-        //         breakpoints.on('<=medium', off);
-        //         breakpoints.on('>medium', on);
-        //     });
-        // // Banner.
-        // var $banner = $('#banner');
-        // $banner._parallax();
     }
 
 
@@ -240,18 +135,22 @@ export class Agreement extends Component {
                 const that = this;
                 response.then(result => {
                     if (result.statusText === 'OK') {
-                        // this.setState({ registerSuccess: true });
-                        // this.showModal();
-                        Alert.open({
-                            alertTip: "Thank for singing up. Please check your email to activate.",
-                            closeAlert: function () {
-                                that.setState({
-                                    visible: false,
-                                    RedirectStatus: true,
-                                    RedirectPath: "#"
-                                });
-                            }
+                        message.success("Thank for singing up. Please check your email to activate.");
+                        that.setState({
+                            visible: false,
+                            RedirectStatus: true,
+                            RedirectPath: "#"
                         });
+                        // Alert.open({
+                        //     alertTip: "Thank for singing up. Please check your email to activate.",
+                        //     closeAlert: function () {
+                        //         that.setState({
+                        //             visible: false,
+                        //             RedirectStatus: true,
+                        //             RedirectPath: "#"
+                        //         });
+                        //     }
+                        // });
                     }
                 })
             } else {
@@ -362,7 +261,7 @@ export class Agreement extends Component {
                         {/* <h2 className='text-center' style={{ textAlign: 'center' }}>&nbsp;</h2> */}
                         <div id="canvasContainer" style={{ margin: '20px auto' }}>
                             {!loaded ?
-                                <div style={{paddingTop:'30%', textAlign:'center',width:"100%"}}><span>loading...</span></div>
+                                <div style={{ paddingTop: '30%', textAlign: 'center', width: "100%" }}><span>loading...</span></div>
                                 :
                                 null
                             }
@@ -371,21 +270,11 @@ export class Agreement extends Component {
                             </div>
                             {numPages > 1 && this.renderPagination(currentPage, numPages)}
                             {numPages && this.renderForm()}
-                            {/* <Modal
-                                // centered
-                                style={{ top: 10 }}
-                                title="Register result"
-                                visible={visible}
-                                onOk={this.handleOk}
-                                zIndex={999}
-                            >
-                                <p>Thank for singing up.</p>
-                            </Modal> */}
                         </div>
                     </div>
                 </div>
-                <footer style={{textAlign:'center'}}>
-                    <ul className="icons" style={{marginBottom:20}}>
+                <footer style={{ textAlign: 'center' }}>
+                    <ul className="icons" style={{ marginBottom: 20 }}>
                         <li><a href="http://instagram.com/thehypeadvisor" className="icon alt fa-instagram"><span className="label">Instagram</span></a></li>
                         <li><a href="mailto:team@thehypeadvisor.com" className="icon alt fa-envelope"><span className="label">Email</span></a></li>
                     </ul>

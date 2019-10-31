@@ -81,3 +81,6 @@
 .ant-table-thead > tr > th {
     color: #fff
 }
+.ant-divider-inner-text {
+    color: #fff;
+}
